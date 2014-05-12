@@ -1,0 +1,50 @@
+*prosession*                   VIM ProSession for easy session switching. v0.1
+===============================================================================
+                               VIM ProSession
+
+                   Handle sessions like a PRO. Version 0.1
+
+                Repo: https://github.com/dhruvasagar/vim-prosession
+              Author: Dhruva Sagar <http://dhruvasagar.com/>
+             License: Same terms as Vim itself (see |license|)
+
+===============================================================================
+REQUIREMENTS                                           *prosession-requirements*
+
+VIM ProSession depends on tpope/vim-obsession, kindly ensure you have that
+installed before installing vim-prosession.
+
+===============================================================================
+OPTIONS                                                     *prosession-options*
+
+                                                           *prosession-loaded*
+g:loaded_prosession   Use this option to disable the plugin. Default: >
+                            let g:loaded_prosession = 1
+<
+                                                              *prosession-dir*
+g:prosession_dir      Use this option to configure the path to store all
+                      session files. Default: >
+                            let g:prosession_dir = '~/.vim/sessions'
+<
+                                                       *prosession-tmux-title*
+g:prosession_title    Use this option to enable tmux window name updates as
+                      per current session. Default: >
+                            let g:prosession_tmux_title = 0
+
+===============================================================================
+USAGE                                                   *prosession* *:Prosession*
+
+:Prosession {name}    Switch to an existing session {name} if it exists,
+                      autocompletes names.
+
+:Prosession {dir}     Switch to the directory and start a new session,
+                      autocompletes paths.
+
+===============================================================================
+CONTRIBUTING                                           *prosession-contributing*
+
+Contributions are welcome. Fork the repo and send a pull request or open an
+issue if you discover one at
+https://github.com/dhruvasagar/vim-prosession/issues.
+
+ vim:tw=78:ft=help:norl:ai:et
