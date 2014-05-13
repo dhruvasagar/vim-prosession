@@ -13,7 +13,7 @@ function! s:SetGlobalOptDefault(opt, val) "{{{1
 endfunction
 
 " Set Global Defaults {{{1
-call s:SetGlobalOptDefault('prosession_dir', expand('~/.vim/sessions/'))
+call s:SetGlobalOptDefault('prosession_dir', expand('~/.vim/session/'))
 call s:SetGlobalOptDefault('prosession_tmux_title', 0)
 call s:SetGlobalOptDefault('prosession_load_on_startup', 1)
 

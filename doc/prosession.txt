@@ -1,8 +1,8 @@
-*prosession*                  VIM ProSession for easy session switching. v0.1.2
+*prosession*                  VIM ProSession for easy session switching. v0.1.3
 ===============================================================================
                                VIM ProSession
 
-                   Handle sessions like a PRO. Version 0.1.2
+                   Handle sessions like a PRO. Version 0.1.3
 
                 Repo: https://github.com/dhruvasagar/vim-prosession
               Author: Dhruva Sagar <http://dhruvasagar.com/>
@@ -24,7 +24,7 @@ g:loaded_prosession   Use this option to disable the plugin. Default: >
                                                               *prosession-dir*
 g:prosession_dir      Use this option to configure the path to store all
                       session files. Default: >
-                        let g:prosession_dir = '~/.vim/sessions'
+                        let g:prosession_dir = '~/.vim/session/'
 <
                                                        *prosession-tmux-title*
 g:prosession_title    Use this option to enable tmux window name updates as

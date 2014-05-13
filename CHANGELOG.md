@@ -1,5 +1,9 @@
 # Change Log
 
+## Version 0.1.3
+* Updated `g:prosession_dir` default to `~/.vim/session/` in favor of
+  common vim convention.
+
 ## Version 0.1.2
 * Fixed #1
 
