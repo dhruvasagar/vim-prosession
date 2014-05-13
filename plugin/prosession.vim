@@ -28,7 +28,7 @@ function! s:GetSessionFileName(...) "{{{1
 endfunction
 
 function! s:GetSessionFile(...) "{{{1
-  return g:prosession_dir . call('s:GetSessionFileName', a:000) . '.vim'
+  return fnamemodify(g:prosession_dir, ':p') . call('s:GetSessionFileName', a:000) . '.vim'
 endfunction
 
 " Start / Load session {{{1
@@ -65,7 +65,7 @@ function! s:ProsessionComplete(ArgLead, Cmdline, Cursor) "{{{1
     let flist = glob(a:ArgLead . '*', 0, 1)
   else
     let flead = empty(a:ArgLead) ? '' : '*' . a:ArgLead
-    let flist = glob(g:prosession_dir . flead . '*.vim', 0, 1)
+    let flist = glob(fnamemodify(g:prosession_dir, ':p') . flead . '*.vim', 0, 1)
     let flist = map(flist, "fnamemodify(v:val, ':t:r')")
   endif
   return flist
