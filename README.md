@@ -11,7 +11,8 @@ separate sessions (projects), you can simply switch between them with ease.
 
 ProSession provides command `:Prosession` which completes session file names
 from the sessions directory configured by `g:prosession_dir` (default
-~/.vim/sessions) or completes directory names to start new sessions for.
+~/.vim/sessions) or completes directory names to start new sessions for. For
+more details check `:help procession`.
 
 ## Change Log
 See [CHANGELOG.md](https://github.com/dhruvasagar/vim-prosession/blob/master/CHANGELOG.md)

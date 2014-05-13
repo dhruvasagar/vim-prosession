@@ -3,11 +3,6 @@ if exists('g:loaded_prosession') "{{{1
 endif
 let g:loaded_prosession = 1
 
-" If arg passed to vim proceed skip session stuff {{{1
-if argc()
-  finish
-endif
-
 if !exists(':Obsession') "{{{1
   echo "vim-prosession depends on tpope/vim-obsession, kindly install that for this to work"
   finish
@@ -20,6 +15,7 @@ endfunction
 " Set Global Defaults {{{1
 call s:SetGlobalOptDefault('prosession_dir', expand('~/.vim/sessions/'))
 call s:SetGlobalOptDefault('prosession_tmux_title', 0)
+call s:SetGlobalOptDefault('prosession_load_on_startup', 1)
 
 function! s:GetCurrDir() "{{{1
   return fnamemodify(getcwd(), ':t')
@@ -36,13 +32,15 @@ function! s:GetSessionFile(...) "{{{1
 endfunction
 
 " Start / Load session {{{1
-if filereadable(s:GetSessionFile())
-  silent execute 'source' s:GetSessionFile()
-  if g:prosession_tmux_title
-    call system('tmux rename-window "vim - ' . s:GetSessionFileName() . '"')
+if !argc() && g:prosession_load_on_startup
+  if filereadable(s:GetSessionFile())
+    silent execute 'source' s:GetSessionFile()
+    if g:prosession_tmux_title
+      call system('tmux rename-window "vim - ' . s:GetSessionFileName() . '"')
+    endif
   endif
+  silent execute 'Obsession' s:GetSessionFile()
 endif
-silent execute 'Obsession' s:GetSessionFile()
 
 function! s:Prosession(name) "{{{1
   silent Obsession
