@@ -1,28 +1,29 @@
-if exists('g:loaded_prosession') "{{{1
+" Guards {{{1
+if exists('g:loaded_prosession')
   finish
 endif
 let g:loaded_prosession = 1
 
-if !exists(':Obsession') "{{{1
-  echo "vim-prosession depends on tpope/vim-obsession, kindly install that for this to work"
+if !exists(':Obsession')
+  echo "vim-prosession depends on tpope/vim-obsession, kindly install that first."
   finish
 endif
 
-function! s:SetGlobalOptDefault(opt, val) "{{{1
+" Set Global Defaults {{{1
+function! s:SetGlobalOptDefault(opt, val)
   if !exists('g:' . a:opt) | let g:{a:opt} = a:val | endif
 endfunction
 
-" Set Global Defaults {{{1
 call s:SetGlobalOptDefault('prosession_dir', expand('~/.vim/session/'))
 call s:SetGlobalOptDefault('prosession_tmux_title', 0)
-call s:SetGlobalOptDefault('prosession_load_on_startup', 1)
+call s:SetGlobalOptDefault('prosession_on_startup', 1)
 
-function! s:GetCurrDir() "{{{1
+function! s:GetCurrDirName() "{{{1
   return fnamemodify(getcwd(), ':t')
 endfunction
 
 function! s:GetSessionFileName(...) "{{{1
-  let fname = a:0 ? a:1 : s:GetCurrDir()
+  let fname = a:0 ? a:1 : s:GetCurrDirName()
   if fname =~# '/$' | let fname = fname[:-2] | endif
   return fnamemodify(fname, ':t:r')
 endfunction
@@ -31,19 +32,10 @@ function! s:GetSessionFile(...) "{{{1
   return fnamemodify(g:prosession_dir, ':p') . call('s:GetSessionFileName', a:000) . '.vim'
 endfunction
 
-" Start / Load session {{{1
-if !argc() && g:prosession_load_on_startup
-  if filereadable(s:GetSessionFile())
-    silent execute 'source' s:GetSessionFile()
-    if g:prosession_tmux_title
-      call system('tmux rename-window "vim - ' . s:GetSessionFileName() . '"')
-    endif
-  endif
-  silent execute 'Obsession' s:GetSessionFile()
-endif
-
 function! s:Prosession(name) "{{{1
-  silent Obsession
+  if get(g:, 'this_obsession')
+    silent Obsession " Stop current session
+  endif
   silent noautocmd bufdo bw
   let sname = s:GetSessionFile(expand(a:name))
   if filereadable(sname)
@@ -70,6 +62,15 @@ function! s:ProsessionComplete(ArgLead, Cmdline, Cursor) "{{{1
   endif
   return flist
 endfunction
+
+" Start / Load session {{{1
+augroup Prosession
+  au!
+
+  if !argc() && g:prosession_on_startup
+    autocmd VimEnter * nested call s:Prosession(s:GetSessionFile())
+  endif
+augroup END
 
 " Command Prosession {{{1
 command! -bar -nargs=1 -complete=customlist,s:ProsessionComplete Prosession call s:Prosession(<q-args>)
