@@ -64,13 +64,13 @@ function! s:ProsessionComplete(ArgLead, Cmdline, Cursor) "{{{1
 endfunction
 
 " Start / Load session {{{1
-augroup Prosession
-  au!
+if !argc() && g:prosession_on_startup
+  augroup Prosession
+    au!
 
-  if !argc() && g:prosession_on_startup
     autocmd VimEnter * nested call s:Prosession(s:GetSessionFile())
-  endif
-augroup END
+  augroup END
+endif
 
 " Command Prosession {{{1
 command! -bar -nargs=1 -complete=customlist,s:ProsessionComplete Prosession call s:Prosession(<q-args>)
