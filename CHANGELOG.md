@@ -1,5 +1,8 @@
 # Change Log
 
+## Version 0.2.2
+* Updated augroup definition for loading session during vim startup
+
 ## Version 0.2.1
 * Fixed guard condition for existing vim session while switching to another
 
