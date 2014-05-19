@@ -1,5 +1,8 @@
 # Change Log
 
+## Version 0.2.1
+* Fixed guard condition for existing vim session while switching to another
+
 ## Version 0.2
 * Switchined to using VimEnter autocmd for loading autocmd to do it more
   gracefully, otherwise there were side effects like skipping of -c commands.
