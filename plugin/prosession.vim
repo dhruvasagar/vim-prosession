@@ -33,7 +33,7 @@ function! s:GetSessionFile(...) "{{{1
 endfunction
 
 function! s:Prosession(name) "{{{1
-  if get(g:, 'this_obsession')
+  if !empty(get(g:, 'this_obsession', ''))
     silent Obsession " Stop current session
   endif
   silent noautocmd bufdo bw
