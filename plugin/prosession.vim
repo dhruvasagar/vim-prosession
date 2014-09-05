@@ -19,7 +19,7 @@ call s:SetGlobalOptDefault('prosession_tmux_title', 0)
 call s:SetGlobalOptDefault('prosession_on_startup', 1)
 
 function! s:GetCurrDirName() "{{{1
-  return fnamemodify(getcwd(), ':t')
+  return sha256(fnamemodify(getcwd(), ':~'))
 endfunction
 
 function! s:GetSessionFileName(...) "{{{1
