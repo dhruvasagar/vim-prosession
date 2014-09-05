@@ -4,6 +4,8 @@ if exists('g:loaded_prosession')
 endif
 let g:loaded_prosession = 1
 
+let s:read_from_stdin = 0
+
 if !exists(':Obsession')
   echo "vim-prosession depends on tpope/vim-obsession, kindly install that first."
   finish
@@ -33,6 +35,9 @@ function! s:GetSessionFile(...) "{{{1
 endfunction
 
 function! s:Prosession(name) "{{{1
+  if s:read_from_stdin
+    return
+  endif
   if !empty(get(g:, 'this_obsession', ''))
     silent Obsession " Stop current session
   endif
@@ -68,6 +73,7 @@ if !argc() && g:prosession_on_startup
   augroup Prosession
     au!
 
+    autocmd StdInReadPost * nested let s:read_from_stdin=1
     autocmd VimEnter * nested call s:Prosession(s:GetSessionFile())
   augroup END
 endif
