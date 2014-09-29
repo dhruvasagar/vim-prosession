@@ -18,10 +18,12 @@ endfunction
 
 call s:SetGlobalOptDefault('prosession_dir', expand('~/.vim/session/'))
 call s:SetGlobalOptDefault('prosession_tmux_title', 0)
+call s:SetGlobalOptDefault('prosession_sha_length', 8)
 call s:SetGlobalOptDefault('prosession_on_startup', 1)
 
 function! s:GetCurrDirName() "{{{1
-  return sha256(fnamemodify(getcwd(), ':~'))
+  let pwd = fnamemodify(getcwd(), ':~')
+  return pwd . '__sha256__' . sha256(pwd)[:g:prosession_sha_length]
 endfunction
 
 function! s:GetSessionFileName(...) "{{{1
@@ -51,7 +53,8 @@ function! s:Prosession(name) "{{{1
     let sname = s:GetSessionFile()
   endif
   if g:prosession_tmux_title
-    call system('tmux rename-window "vim - ' . s:GetSessionFileName(a:name) . '"')
+    let sfname = s:GetSessionFileName(a:name)
+    call system('tmux rename-window "vim - ' . sfname[:stridx(sfname, '__sha256__')-1] . '"')
   endif
   silent execute 'Obsession' sname
 endfunction
