@@ -1,20 +1,20 @@
 *prosession*                          VIM ProSession for easy session switching.
-===============================================================================
+-------------------------------------------------------------------------------
                                  VIM ProSession
 
-                   Handle sessions like a PRO. Version 0.2.2
+                   Handle sessions like a PRO. Version 0.3.0
 
               Repo: https://github.com/dhruvasagar/vim-prosession
                  Author: Dhruva Sagar <http://dhruvasagar.com/>
                License: Same terms as Vim itself (see |license|)
 
-===============================================================================
+-------------------------------------------------------------------------------
 REQUIREMENTS                                           *prosession-requirements*
 
 VIM ProSession depends on tpope/vim-obsession, kindly ensure you have that
 installed before installing vim-prosession.
 
-===============================================================================
+-------------------------------------------------------------------------------
 OPTIONS                                                     *prosession-options*
 
                                                              *prosession-loaded*
@@ -38,8 +38,15 @@ g:prosession_on_startup
                       startup if no arguments are supplied to vim. Default: >
                         let g:prosession_on_startup = 1
 <
+                                                     *g:prosession-sha-length*
+g:prosession_sha_length
+                      This option determines the length of the sha256 hash to
+                      use for appending to the current directory name to be
+                      used for the prosession session file name. >
+                        let g:prosession_sha_length = 8
+<
 
-===============================================================================
+-------------------------------------------------------------------------------
 USAGE                                                              *:Prosession*
 
 :Prosession {name}    Switch to an existing session {name} if it exists,
@@ -48,7 +55,7 @@ USAGE                                                              *:Prosession*
 :Prosession {dir}     Switch to the directory and start a new session,
                       autocompletes paths.
 
-===============================================================================
+-------------------------------------------------------------------------------
 CONTRIBUTING                                           *prosession-contributing*
 
 Contributions are welcome. Fork the repo and send a pull request or open an
