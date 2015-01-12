@@ -1,5 +1,12 @@
 # Change Log
 
+## Version 0.4.0:
+* Added `g:prosession_default_session` option to allow using of a default
+  session instead of always creating a new one for a new directory.
+
+## Version 0.3.0
+* Merged pull request #2. Handling case if using vim with stdin.
+
 ## Version 0.2.2
 * Updated augroup definition for loading session during vim startup
 

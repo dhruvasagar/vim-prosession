@@ -2,7 +2,7 @@
 -------------------------------------------------------------------------------
                                  VIM ProSession
 
-                   Handle sessions like a PRO. Version 0.3.0
+                   Handle sessions like a PRO. Version 0.4.0
 
               Repo: https://github.com/dhruvasagar/vim-prosession
                  Author: Dhruva Sagar <http://dhruvasagar.com/>
@@ -44,6 +44,13 @@ g:prosession_sha_length
                       use for appending to the current directory name to be
                       used for the prosession session file name. >
                         let g:prosession_sha_length = 8
+<
+                                                *g:prosession-default-session*
+g:prosession_default_session
+                      This option creates & uses a 'default' session to be
+                      used in case when launching vim and a corresponding
+                      session hasn't been found yet. >
+                        let g:prosession_default_session = 0
 <
 
 -------------------------------------------------------------------------------
