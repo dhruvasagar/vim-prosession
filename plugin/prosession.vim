@@ -20,7 +20,7 @@ call s:SetGlobalOptDefault('prosession_dir', expand('~/.vim/session/'))
 call s:SetGlobalOptDefault('prosession_tmux_title', 0)
 call s:SetGlobalOptDefault('prosession_sha_length', 8)
 call s:SetGlobalOptDefault('prosession_on_startup', 1)
-call s:SetGlobalOptDefault('prosession_default_session', 1)
+call s:SetGlobalOptDefault('prosession_default_session', 0)
 
 function! s:GetDirName(...) "{{{1
   let pwd = a:0 ? a:1 : getcwd()

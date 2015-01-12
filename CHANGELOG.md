@@ -1,5 +1,8 @@
 # Change Log
 
+## Version 0.4.1
+* Disabled `g:prosession_default_session` by default
+
 ## Version 0.4.0:
 * Added `g:prosession_default_session` option to allow using of a default
   session instead of always creating a new one for a new directory.
