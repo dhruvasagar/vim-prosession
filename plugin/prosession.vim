@@ -20,14 +20,16 @@ call s:SetGlobalOptDefault('prosession_dir', expand('~/.vim/session/'))
 call s:SetGlobalOptDefault('prosession_tmux_title', 0)
 call s:SetGlobalOptDefault('prosession_sha_length', 8)
 call s:SetGlobalOptDefault('prosession_on_startup', 1)
+call s:SetGlobalOptDefault('prosession_default_session', 0)
 
-function! s:GetCurrDirName() "{{{1
-  let pwd = fnamemodify(getcwd(), ':~')
+function! s:GetDirName(...) "{{{1
+  let pwd = a:0 ? a:1 : getcwd()
+  " let pwd = fnamemodify(pwd, ':~')
   return pwd . '__sha256__' . sha256(pwd)[:g:prosession_sha_length]
 endfunction
 
 function! s:GetSessionFileName(...) "{{{1
-  let fname = a:0 ? a:1 : s:GetCurrDirName()
+  let fname = call('s:GetDirName', a:000)
   if fname =~# '/$' | let fname = fname[:-2] | endif
   return fnamemodify(fname, ':t:r')
 endfunction
@@ -50,7 +52,12 @@ function! s:Prosession(name) "{{{1
   elseif isdirectory(expand(a:name))
     execute 'cd' expand(a:name)
   else
-    let sname = s:GetSessionFile()
+    if g:prosession_default_session
+      let sname = s:GetSessionFile('default')
+      return s:Prosession(sname)
+    else
+      let sname = s:GetSessionFile()
+    endif
   endif
   if g:prosession_tmux_title
     let sfname = s:GetSessionFileName(a:name)
