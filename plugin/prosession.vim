@@ -73,6 +73,7 @@ function! s:ProsessionComplete(ArgLead, Cmdline, Cursor) "{{{1
     let flead = empty(a:ArgLead) ? '' : '*' . a:ArgLead
     let flist = glob(fnamemodify(g:prosession_dir, ':p') . flead . '*.vim', 0, 1)
     let flist = map(flist, "fnamemodify(v:val, ':t:r')")
+    let flist = map(flist, "strpart(v:val, 0, strridx(v:val, '__sha256__'))")
   endif
   return flist
 endfunction
