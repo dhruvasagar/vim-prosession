@@ -47,7 +47,7 @@ function! s:Prosession(name) "{{{1
   silent noautocmd bufdo bw
   let sname = s:GetSessionFile(expand(a:name))
   if filereadable(sname)
-    silent execute 'source' sname
+    silent execute 'source' fnameescape(sname)
   elseif isdirectory(expand(a:name))
     execute 'cd' expand(a:name)
   else
@@ -62,7 +62,7 @@ function! s:Prosession(name) "{{{1
     let sfname = s:GetSessionFileName(a:name)
     call system('tmux rename-window "vim - ' . sfname[:stridx(sfname, '__sha256__')-1] . '"')
   endif
-  silent execute 'Obsession' sname
+  silent execute 'Obsession' fnameescape(sname)
 endfunction
 
 function! s:ProsessionComplete(ArgLead, Cmdline, Cursor) "{{{1
