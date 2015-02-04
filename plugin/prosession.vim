@@ -37,6 +37,18 @@ function! s:GetSessionFile(...) "{{{1
   return fnamemodify(g:prosession_dir, ':p') . call('s:GetSessionFileName', a:000) . '.vim'
 endfunction
 
+function! s:SetTmuxWindowName(name) "{{{1
+  if g:prosession_tmux_title
+    let sfname = s:GetSessionFileName(a:name)
+    call system('tmux rename-window "vim - ' . sfname[:stridx(sfname, '__sha256__')-1] . '"')
+    augroup ProsessionTmux
+      autocmd!
+
+      autocmd VimLeavePre * call system('tmux set-window-option -t ' . $TMUX_PANE . ' automatic-rename on')
+    augroup END
+  endif
+endfunction
+
 function! s:Prosession(name) "{{{1
   if s:read_from_stdin
     return
@@ -58,10 +70,7 @@ function! s:Prosession(name) "{{{1
       let sname = s:GetSessionFile()
     endif
   endif
-  if g:prosession_tmux_title
-    let sfname = s:GetSessionFileName(a:name)
-    call system('tmux rename-window "vim - ' . sfname[:stridx(sfname, '__sha256__')-1] . '"')
-  endif
+  call s:SetTmuxWindowName(a:name)
   silent execute 'Obsession' fnameescape(sname)
 endfunction
 
