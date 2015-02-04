@@ -61,6 +61,12 @@ function! s:Prosession(name) "{{{1
   if g:prosession_tmux_title
     let sfname = s:GetSessionFileName(a:name)
     call system('tmux rename-window "vim - ' . sfname[:stridx(sfname, '__sha256__')-1] . '"')
+    " Restore tmux automatic window naming on exit
+    augroup ProsessionTmux
+      autocmd!
+
+      autocmd VimLeavePre * call system('tmux set-window-option -t ' . $TMUX_PANE . ' automatic-rename on')
+    augroup END
   endif
   silent execute 'Obsession' fnameescape(sname)
 endfunction
