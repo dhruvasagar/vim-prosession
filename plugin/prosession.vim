@@ -18,17 +18,16 @@ endfunction
 
 call s:SetGlobalOptDefault('prosession_dir', expand('~/.vim/session/'))
 call s:SetGlobalOptDefault('prosession_tmux_title', 0)
-call s:SetGlobalOptDefault('prosession_sha_length', 8)
 call s:SetGlobalOptDefault('prosession_on_startup', 1)
 call s:SetGlobalOptDefault('prosession_default_session', 0)
 
 function! s:GetDirName(...) "{{{1
   let pwd = a:0 ? a:1 : getcwd()
-  return pwd . '__sha256__' . sha256(pwd)[:g:prosession_sha_length]
+  return fnamemodify(undofile(pwd), ':t:r')
 endfunction
 
 function! s:GetSessionFileName(...) "{{{1
-  let fname = a:0 && a:1 =~# '__sha256__' ? a:1 : call('s:GetDirName', a:000)
+  let fname = a:0 && a:1 =~# '\.vim$' ? a:1 : call('s:GetDirName', a:000)
   if fname =~# '/$' | let fname = fname[:-2] | endif
   return fnamemodify(fname, ':t:r')
 endfunction
@@ -39,8 +38,9 @@ endfunction
 
 function! s:SetTmuxWindowName(name) "{{{1
   if g:prosession_tmux_title
-    let sfname = s:GetSessionFileName(a:name)
-    call system('tmux rename-window "vim - ' . sfname[:stridx(sfname, '__sha256__')-1] . '"')
+    let sfname = fnamemodify(s:GetSessionFileName(a:name), ':r')
+    let sfname = sfname[strridx(sfname,'%')+1:]
+    call system('tmux rename-window "vim - ' . sfname . '"')
     augroup ProsessionTmux
       autocmd!
 
@@ -82,8 +82,8 @@ function! s:ProsessionComplete(ArgLead, Cmdline, Cursor) "{{{1
     let flead = empty(a:ArgLead) ? '' : '*' . a:ArgLead
     let flist = glob(fnamemodify(g:prosession_dir, ':p') . flead . '*.vim', 0, 1)
     let flist = map(flist, "fnamemodify(v:val, ':t:r')")
-    let flist = map(flist, "strpart(v:val, 0, strridx(v:val, '__sha256__'))")
   endif
+  let flist = map(flist, "substitute(v:val, '%', '/', 'g')")
   return flist
 endfunction
 
