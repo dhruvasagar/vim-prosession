@@ -2,7 +2,7 @@
 -------------------------------------------------------------------------------
                                  VIM ProSession
 
-                   Handle sessions like a PRO. Version 0.4.2
+                   Handle sessions like a PRO. Version 0.5.0
 
               Repo: https://github.com/dhruvasagar/vim-prosession
                  Author: Dhruva Sagar <http://dhruvasagar.com/>
@@ -38,13 +38,6 @@ g:prosession_on_startup
                       startup if no arguments are supplied to vim. Default: >
                         let g:prosession_on_startup = 1
 <
-                                                     *g:prosession-sha-length*
-g:prosession_sha_length
-                      This option determines the length of the sha256 hash to
-                      use for appending to the current directory name to be
-                      used for the prosession session file name. >
-                        let g:prosession_sha_length = 8
-<
                                                 *g:prosession-default-session*
 g:prosession_default_session
                       This option creates & uses a 'default' session to be
@@ -56,11 +49,8 @@ g:prosession_default_session
 -------------------------------------------------------------------------------
 USAGE                                                              *:Prosession*
 
-:Prosession {name}    Switch to an existing session {name} if it exists,
-                      autocompletes names.
-
-:Prosession {dir}     Switch to the directory and start a new session,
-                      autocompletes paths.
+:Prosession {dir}     Switch to the session of the directory if one already
+                      exists otherwise start a new session, autocompletes paths.
 
 -------------------------------------------------------------------------------
 CONTRIBUTING                                           *prosession-contributing*

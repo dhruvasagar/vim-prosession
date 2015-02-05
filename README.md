@@ -1,4 +1,4 @@
-# VIM ProSession v0.4.2
+# VIM ProSession v0.5.0
 
 A VIM plugin to handle sessions like a pro.
 

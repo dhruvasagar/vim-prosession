@@ -1,5 +1,8 @@
 # Change Log
 
+## Version 0.5.0
+* Switched to undofile style naming for the session file
+
 ## Version 0.4.1
 * Disabled `g:prosession_default_session` by default
 
