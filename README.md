@@ -9,10 +9,11 @@ along with it the various files, settings etc ensuring compete isolation
 between projects. Now there's little need to launch multiple vim instances for
 separate sessions (projects), you can simply switch between them with ease.
 
-ProSession provides command `:Prosession` which completes session file names
-from the sessions directory configured by `g:prosession_dir` (default
-`~/.vim/session/`) or completes directory names to start new sessions for. For
-more details check `:help prosession`.
+ProSession uses a file name format similar to the `undofile` name format.
+`:Prosession` provides existing session paths from the sessions directory from
+`g:prosession_dir` (set to `~/.vim/session/` by default) or also completes
+paths from the file system which you can use to start new sessions for them.
+For more details check `:help prosession`.
 
 ## Change Log
 See [CHANGELOG.md](https://github.com/dhruvasagar/vim-prosession/blob/master/CHANGELOG.md)
