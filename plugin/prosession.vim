@@ -21,8 +21,8 @@ call s:SetGlobalOptDefault('prosession_tmux_title', 0)
 call s:SetGlobalOptDefault('prosession_on_startup', 1)
 call s:SetGlobalOptDefault('prosession_default_session', 0)
 
-function! s:StripTrailingSlash(name)
-  return name =~# '/$' ? name[:-2] | name
+function! s:StripTrailingSlash(name) "{{{1
+  return a:name =~# '/$' ? a:name[:-2] | a:name
 endfunction
 
 function! s:GetDirName(...) "{{{1
