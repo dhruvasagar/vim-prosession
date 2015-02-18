@@ -22,7 +22,7 @@ call s:SetGlobalOptDefault('prosession_on_startup', 1)
 call s:SetGlobalOptDefault('prosession_default_session', 0)
 
 function! s:StripTrailingSlash(name)
-  return name =~# '/$' ? name[:-2] | name
+  return a:name =~# '/$' ? a:name[:-2] : a:name
 endfunction
 
 function! s:GetDirName(...) "{{{1
@@ -61,7 +61,9 @@ function! s:Prosession(name) "{{{1
   if !empty(get(g:, 'this_obsession', ''))
     silent Obsession " Stop current session
   endif
-  silent noautocmd bufdo bw
+  if len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) > 0
+     silent noautocmd bufdo bw
+  endif
   let sname = s:GetSessionFile(expand(a:name))
   if filereadable(sname)
     silent execute 'source' fnameescape(sname)
