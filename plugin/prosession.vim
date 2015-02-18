@@ -61,7 +61,7 @@ function! s:Prosession(name) "{{{1
   if !empty(get(g:, 'this_obsession', ''))
     silent Obsession " Stop current session
   endif
-  silent noautocmd bufdo bw
+  silent! noautocmd bufdo bw
   let sname = s:GetSessionFile(expand(a:name))
   if filereadable(sname)
     silent execute 'source' fnameescape(sname)
