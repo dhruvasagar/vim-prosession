@@ -21,14 +21,19 @@ call s:SetGlobalOptDefault('prosession_tmux_title', 0)
 call s:SetGlobalOptDefault('prosession_on_startup', 1)
 call s:SetGlobalOptDefault('prosession_default_session', 0)
 
+function! s:StripTrailingSlash(name)
+  return name =~# '/$' ? name[:-2] | name
+endfunction
+
 function! s:GetDirName(...) "{{{1
-  let pwd = a:0 ? a:1 : getcwd()
-  return fnamemodify(undofile(pwd), ':t:r')
+  let cwd = a:0 ? a:1 : getcwd()
+  let cwd = s:StripTrailingSlash(cwd)
+  return fnamemodify(undofile(cwd), ':t:r')
 endfunction
 
 function! s:GetSessionFileName(...) "{{{1
   let fname = a:0 && a:1 =~# '\.vim$' ? a:1 : call('s:GetDirName', a:000)
-  if fname =~# '/$' | let fname = fname[:-2] | endif
+  let fname = s:StripTrailingSlash(fname)
   return fnamemodify(fname, ':t:r')
 endfunction
 
