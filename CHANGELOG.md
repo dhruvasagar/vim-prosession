@@ -1,5 +1,8 @@
 # Change Log
 
+## Version 0.5.1
+* Added function for stripping trailing slash for directory names
+
 ## Version 0.5.0
 * Switched to undofile style naming for the session file
 
