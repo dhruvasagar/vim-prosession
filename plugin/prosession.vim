@@ -22,6 +22,10 @@ call s:SetGlobalOptDefault('prosession_on_startup', 1)
 call s:SetGlobalOptDefault('prosession_default_session', 0)
 call s:SetGlobalOptDefault('prosession_per_git_branch', 0)
 
+function! s:undofile(cwd) "{{{1
+  return substitute(a:cwd, '/', '%', 'g')
+endfunction
+
 function! s:StripTrailingSlash(name) "{{{1
   return a:name =~# '/$' ? a:name[:-2] : a:name
 endfunction
@@ -44,7 +48,7 @@ function! s:GetDirName(...) "{{{1
     let cwd .= '_' . s:GitCurrBranch(cwd)
   endif
   echom cwd
-  return fnamemodify(undofile(cwd), ':t:r')
+  return s:undofile(cwd)
 endfunction
 
 function! s:GetSessionFileName(...) "{{{1
