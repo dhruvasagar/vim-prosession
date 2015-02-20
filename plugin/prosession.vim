@@ -20,14 +20,30 @@ call s:SetGlobalOptDefault('prosession_dir', expand('~/.vim/session/'))
 call s:SetGlobalOptDefault('prosession_tmux_title', 0)
 call s:SetGlobalOptDefault('prosession_on_startup', 1)
 call s:SetGlobalOptDefault('prosession_default_session', 0)
+call s:SetGlobalOptDefault('prosession_per_git_branch', 0)
 
 function! s:StripTrailingSlash(name) "{{{1
   return a:name =~# '/$' ? a:name[:-2] : a:name
 endfunction
 
+function! s:ExecInDir(dir, cmd) "{{{1
+  return system('cd ' . fnameescape(a:dir) . '; ' . a:cmd)
+endfunction
+
+function! s:GitCurrBranch(dir) "{{{1
+  let branch = s:ExecInDir(a:dir, 'git rev-parse --abbrev-ref HEAD')
+  if branch =~# "\n$" | let branch = branch[:-2] | endif
+  echom branch
+  return branch
+endfunction
+
 function! s:GetDirName(...) "{{{1
   let cwd = a:0 ? a:1 : getcwd()
   let cwd = s:StripTrailingSlash(cwd)
+  if g:prosession_per_git_branch
+    let cwd .= '_' . s:GitCurrBranch(cwd)
+  endif
+  echom cwd
   return fnamemodify(undofile(cwd), ':t:r')
 endfunction
 
