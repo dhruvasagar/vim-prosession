@@ -47,7 +47,8 @@ g:prosession_default_session
 <
                                                  *g:prosession_per_git_branch*
 g:prosession_per_git_branch
-                      This is disabled by default. You can use this to enable per git branch sessions. >
+                      This is disabled by default. You can use this to enable
+                      per git branch sessions. >
                         let g:prosession_per_git_branch = 0
 <
 
@@ -55,7 +56,8 @@ g:prosession_per_git_branch
 USAGE                                                              *:Prosession*
 
 :Prosession {dir}     Switch to the session of the directory if one already
-                      exists otherwise start a new session, autocompletes paths.
+                      exists otherwise start a new session, autocompletes
+                      paths.
 
 ------------------------------------------------------------------------------
 CONTRIBUTING                                           *prosession-contributing*
