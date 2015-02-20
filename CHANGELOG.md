@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.5.2
+* Added support for per git branch sessions
+
 ## Version 0.5.1
 * Added function for stripping trailing slash for directory names
 

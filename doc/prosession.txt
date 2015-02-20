@@ -1,20 +1,20 @@
-*prosession*                          VIM ProSession for easy session switching.
--------------------------------------------------------------------------------
+*prosession*                          VIM ProSession for easy session switching
+------------------------------------------------------------------------------
                                  VIM ProSession
 
-                   Handle sessions like a PRO. Version 0.5.1
+                   Handle sessions like a PRO. Version 0.5.2
 
               Repo: https://github.com/dhruvasagar/vim-prosession
                  Author: Dhruva Sagar <http://dhruvasagar.com/>
                License: Same terms as Vim itself (see |license|)
 
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 REQUIREMENTS                                           *prosession-requirements*
 
 VIM ProSession depends on tpope/vim-obsession, kindly ensure you have that
 installed before installing vim-prosession.
 
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 OPTIONS                                                     *prosession-options*
 
                                                              *prosession-loaded*
@@ -45,14 +45,19 @@ g:prosession_default_session
                       session hasn't been found yet. >
                         let g:prosession_default_session = 0
 <
+                                                 *g:prosession_per_git_branch*
+g:prosession_per_git_branch
+                      This is disabled by default. You can use this to enable per git branch sessions. >
+                        let g:prosession_per_git_branch = 0
+<
 
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 USAGE                                                              *:Prosession*
 
 :Prosession {dir}     Switch to the session of the directory if one already
                       exists otherwise start a new session, autocompletes paths.
 
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 CONTRIBUTING                                           *prosession-contributing*
 
 Contributions are welcome. Fork the repo and send a pull request or open an
