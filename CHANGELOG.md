@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.5.3
+* Moved optional git functions to an autoload file.
+
 ## 0.5.2
 * Added support for per git branch sessions
 
