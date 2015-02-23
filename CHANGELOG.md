@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.5.4
+* Added `g:prosession_branch_cmd` to allow working with other vcs, but set to
+  use git by default.
+* Added a check to ensure `g:prosession_branch_cmd` ignores errors, if any.
+
 ## 0.5.3
 * Moved optional git functions to an autoload file.
 

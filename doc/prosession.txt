@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------
                                  VIM ProSession
 
-                   Handle sessions like a PRO. Version 0.5.3
+                   Handle sessions like a PRO. Version 0.5.4
 
               Repo: https://github.com/dhruvasagar/vim-prosession
                  Author: Dhruva Sagar <http://dhruvasagar.com/>
@@ -45,11 +45,18 @@ g:prosession_default_session
                       session hasn't been found yet. >
                         let g:prosession_default_session = 0
 <
-                                                 *g:prosession_per_git_branch*
-g:prosession_per_git_branch
+                                                     *g:prosession_per_branch*
+g:prosession_per_branch
                       This is disabled by default. You can use this to enable
                       per git branch sessions. >
-                        let g:prosession_per_git_branch = 0
+                        let g:prosession_per_branch = 0
+<
+                                                     *g:prosession_branch_cmd*
+g:prosession_branch_cmd
+                      This defines the shell command to use to determine the
+                      current branch. By default this is set to work with git
+                      but can be changed for other vcs as well. >
+                        let g:prosession_branch_cmd = 'git rev-parse --abbrev-ref HEAD 2>/dev/null
 <
 
 ------------------------------------------------------------------------------
