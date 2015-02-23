@@ -2,8 +2,8 @@ function! prosession#ExecInDir(dir, cmd) "{{{1
   return system('cd ' . fnameescape(a:dir) . '; ' . a:cmd)
 endfunction
 
-function! prosession#GitCurrBranch(dir) "{{{1
-  let branch = prosession#ExecInDir(a:dir, 'git rev-parse --abbrev-ref HEAD')
+function! prosession#GetCurrBranch(dir) "{{{1
+  let branch = prosession#ExecInDir(a:dir, g:prosession_branch_cmd)
   if branch =~# "\n$" | let branch = branch[:-2] | endif
   return branch
 endfunction
