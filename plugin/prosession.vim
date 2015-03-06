@@ -71,6 +71,11 @@ function! s:Prosession(name) "{{{1
     silent Obsession " Stop current session
   endif
   silent! noautocmd bufdo bw
+
+  if !isdirectory(fnamemodify(g:prosession_dir, ':p'))
+      call mkdir(fnamemodify(g:prosession_dir, ':p'), 'p')
+  endif
+
   let sname = s:GetSessionFile(expand(a:name))
   if filereadable(sname)
     silent execute 'source' fnameescape(sname)
@@ -79,7 +84,7 @@ function! s:Prosession(name) "{{{1
   else
     if g:prosession_default_session
       let sname = s:GetSessionFile('default')
-      return s:Prosession(sname)
+      "return s:Prosession(sname)
     else
       let sname = s:GetSessionFile()
     endif
