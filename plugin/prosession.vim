@@ -23,6 +23,10 @@ call s:SetGlobalOptDefault('prosession_default_session', 0)
 call s:SetGlobalOptDefault('prosession_per_branch', 0)
 call s:SetGlobalOptDefault('prosession_branch_cmd', 'git rev-parse --abbrev-ref HEAD 2>/dev/null')
 
+if !isdirectory(fnamemodify(g:prosession_dir, ':p'))
+  call mkdir(fnamemodify(g:prosession_dir, ':p'), 'p')
+endif
+
 function! s:undofile(cwd) "{{{1
   return substitute(a:cwd, '/', '%', 'g')
 endfunction
@@ -79,7 +83,7 @@ function! s:Prosession(name) "{{{1
   else
     if g:prosession_default_session
       let sname = s:GetSessionFile('default')
-      return s:Prosession(sname)
+      silent execute 'source' fnameescape(sname)
     else
       let sname = s:GetSessionFile()
     endif
