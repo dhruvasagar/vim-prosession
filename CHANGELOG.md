@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.5.5
+* Added check for `g:prosession_dir` to create it if not already present.
+* Fix default session loading flow, instead of doing a recursive call
+  just source the default session file, rest will work
+
 ## 0.5.4
 * Added `g:prosession_branch_cmd` to allow working with other vcs, but set to
   use git by default.
