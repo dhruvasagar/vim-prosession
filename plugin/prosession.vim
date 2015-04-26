@@ -45,9 +45,12 @@ function! s:GetDirName(...) "{{{1
 endfunction
 
 function! s:GetSessionFileName(...) "{{{1
-  let fname = a:0 && a:1 =~# '\.vim$' ? a:1 : call('s:GetDirName', a:000)
-  let fname = s:StripTrailingSlash(fname)
-  return fnamemodify(fname, ':t:r')
+  if a:0 && a:1 =~# '\.vim$'
+    let l:fname = a:1
+    return fnamemodify(l:fname, ':t:r')
+  endif
+  let l:fname =  call('s:GetDirName', a:000)
+  return s:StripTrailingSlash(l:fname)
 endfunction
 
 function! s:GetSessionFile(...) "{{{1
