@@ -50,7 +50,7 @@ function! s:GetSessionFileName(...) "{{{1
     return fnamemodify(l:fname, ':t:r')
   endif
   let l:fname =  call('s:GetDirName', a:000)
-  return s:StripTrailingSlash(fname)
+  return s:StripTrailingSlash(l:fname)
 endfunction
 
 function! s:GetSessionFile(...) "{{{1
