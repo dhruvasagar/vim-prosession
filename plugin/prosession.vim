@@ -92,19 +92,6 @@ function! s:Prosession(name) "{{{1
   silent execute 'Obsession' fnameescape(sname)
 endfunction
 
-function! s:ProsessionComplete(ArgLead, Cmdline, Cursor) "{{{1
-  let fldr = fnamemodify(expand(a:ArgLead), ':h')
-  if !empty(a:ArgLead) && fldr != '.' && isdirectory(fldr)
-    let flist = glob(a:ArgLead . '*', 0, 1)
-  else
-    let flead = empty(a:ArgLead) ? '' : '*' . a:ArgLead
-    let flist = glob(fnamemodify(g:prosession_dir, ':p') . flead . '*.vim', 0, 1)
-    let flist = map(flist, "fnamemodify(v:val, ':t:r')")
-  endif
-  let flist = map(flist, "substitute(v:val, '%', '/', 'g')")
-  return flist
-endfunction
-
 " Start / Load session {{{1
 if !argc() && g:prosession_on_startup
   augroup Prosession
@@ -116,4 +103,4 @@ if !argc() && g:prosession_on_startup
 endif
 
 " Command Prosession {{{1
-command! -bar -nargs=1 -complete=customlist,s:ProsessionComplete Prosession call s:Prosession(<q-args>)
+command! -bar -nargs=1 -complete=customlist,prosession#ProsessionComplete Prosession call s:Prosession(<q-args>)
