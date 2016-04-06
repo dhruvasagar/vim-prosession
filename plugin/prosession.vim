@@ -40,7 +40,7 @@ function! s:GetCWD()
 endfunction
 
 function! s:GetDirName(...) "{{{1
-  let cwd = a:0 ? a:1 : s:GetCWD()
+  let dir = a:0 ? a:1 : s:GetCWD()
   let dir = s:StripTrailingSlash(dir)
   if g:prosession_per_branch
     let dir .= '_' . prosession#GetCurrBranch(dir)
