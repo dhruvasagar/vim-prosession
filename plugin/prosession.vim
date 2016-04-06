@@ -35,12 +35,12 @@ function! s:StripTrailingSlash(name) "{{{1
   return a:name =~# '/$' ? a:name[:-2] : a:name
 endfunction
 
+function! s:GetCWD()
+  return exists('*ProjectRootGuess') ? ProjectRootGuess() : getcwd()
+endfunction
+
 function! s:GetDirName(...) "{{{1
-  if a:0
-    let dir = a:1
-  else
-    let dir = exists('*ProjectRootGuess') ? ProjectRootGuess() : getcwd()
-  endif
+  let cwd = a:0 ? a:1 : s:GetCWD()
   let dir = s:StripTrailingSlash(dir)
   if g:prosession_per_branch
     let dir .= '_' . prosession#GetCurrBranch(dir)
