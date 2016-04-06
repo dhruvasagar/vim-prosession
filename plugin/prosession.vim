@@ -36,12 +36,16 @@ function! s:StripTrailingSlash(name) "{{{1
 endfunction
 
 function! s:GetDirName(...) "{{{1
-  let cwd = a:0 ? a:1 : getcwd()
-  let cwd = s:StripTrailingSlash(cwd)
-  if g:prosession_per_branch
-    let cwd .= '_' . prosession#GetCurrBranch(cwd)
+  if a:0
+    let dir = a:1
+  else
+    let dir = exists('*ProjectRootGuess') ? ProjectRootGuess() : getcwd()
   endif
-  return s:undofile(cwd)
+  let dir = s:StripTrailingSlash(dir)
+  if g:prosession_per_branch
+    let dir .= '_' . prosession#GetCurrBranch(dir)
+  endif
+  return s:undofile(dir)
 endfunction
 
 function! s:GetSessionFileName(...) "{{{1
