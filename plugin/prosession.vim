@@ -22,6 +22,7 @@ call s:SetGlobalOptDefault('prosession_on_startup', 1)
 call s:SetGlobalOptDefault('prosession_default_session', 0)
 call s:SetGlobalOptDefault('prosession_per_branch', 0)
 call s:SetGlobalOptDefault('prosession_branch_cmd', 'git rev-parse --abbrev-ref HEAD 2>/dev/null')
+call s:SetGlobalOptDefault('prosession_tmux_title_format', 'vim - @@@')
 
 if !isdirectory(fnamemodify(g:prosession_dir, ':p'))
   call mkdir(fnamemodify(g:prosession_dir, ':p'), 'p')
@@ -62,7 +63,9 @@ function! s:SetTmuxWindowName(name) "{{{1
   if g:prosession_tmux_title
     let sfname = fnamemodify(s:GetSessionFileName(a:name), ':r')
     let sfname = sfname[strridx(sfname,'%')+1:]
-    call system('tmux rename-window "vim - ' . sfname . '"')
+    let title = substitute(g:prosession_tmux_title_format, '@@@', sfname, 'g')
+    let title = substitute(title, '"', '\\"', 'g')
+    call system('tmux rename-window "' . title . '"')
     augroup ProsessionTmux
       autocmd!
 
