@@ -32,6 +32,12 @@ g:prosession_tmux_title
                       per current session. Default: >
                         let g:prosession_tmux_title = 0
 <
+                                                  *prosession-tmux-title-format*
+g:prosession_tmux_title_format
+                      Use this option to format the tmux window name updates.
+                      Use "@@@" as placeholder for folder name. Default: >
+                        let g:prosession_tmux_title_format = "vim - @@@"
+<
                                                          *prosession-on-startup*
 g:prosession_on_startup
                       Use this option to enable auto loading of session on
