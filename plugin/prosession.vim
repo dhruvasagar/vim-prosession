@@ -61,7 +61,7 @@ endfunction
 
 function! s:SetTmuxWindowName(name) "{{{1
   if g:prosession_tmux_title
-    let sfname = fnamemodify(s:GetSessionFileName(a:name), ':r')
+    let sfname = s:GetSessionFileName(a:name)
     let sfname = sfname[strridx(sfname,'%')+1:]
     let title = substitute(g:prosession_tmux_title_format, '@@@', sfname, 'g')
     let title = substitute(title, '"', '\\"', 'g')
