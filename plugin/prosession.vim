@@ -65,7 +65,7 @@ function! s:SetTmuxWindowName(name) "{{{1
     let sfname = sfname[strridx(sfname,'%')+1:]
     let title = substitute(g:prosession_tmux_title_format, '@@@', sfname, 'g')
     let title = substitute(title, '"', '\\"', 'g')
-    call system('tmux rename-window "' . title . '"')
+    call system('tmux rename-window -t ' . $TMUX_PANE . ' "' . title . '"')
     augroup ProsessionTmux
       autocmd!
 
