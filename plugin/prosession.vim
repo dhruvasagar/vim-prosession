@@ -40,9 +40,23 @@ function! s:GetCWD()
   return exists('*ProjectRootGuess') ? ProjectRootGuess() : getcwd()
 endfunction
 
+function! s:throw(string) abort
+  let v:errmsg = a:string
+  throw 'prosession: '.v:errmsg
+endfunction
+
+function! s:error(str) abort
+  echohl ErrorMsg
+  echomsg a:str
+  echohl None
+endfunction
+
 function! s:GetDirName(...) "{{{1
   let dir = a:0 && a:1 !=# '.' ? a:1 : s:GetCWD()
   let dir = s:StripTrailingSlash(dir)
+  if !isdirectory(dir)
+    call s:throw('Directory ' . dir . ' does not exist')
+  endif
   if g:prosession_per_branch
     let dir .= '_' . prosession#GetCurrBranch(dir)
   endif
@@ -78,11 +92,16 @@ function! s:Prosession(name) "{{{1
   if s:read_from_stdin
     return
   endif
+  try
+    let sname = s:GetSessionFile(expand(a:name))
+  catch /^prosession/
+    call s:error(v:errmsg)
+    return
+  endtry
   if !empty(get(g:, 'this_obsession', ''))
     silent Obsession " Stop current session
   endif
   silent! noautocmd bufdo bw
-  let sname = s:GetSessionFile(expand(a:name))
   if filereadable(sname)
     silent execute 'source' fnameescape(sname)
   elseif isdirectory(expand(a:name))
