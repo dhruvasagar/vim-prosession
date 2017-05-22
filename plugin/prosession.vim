@@ -30,7 +30,7 @@ endif
 
 function! s:undofile(cwd) "{{{1
   if has('win16') || has('win32') || has('win64')
-    return substitute(a:cmd, '\', '%', 'g')
+    return substitute(a:cwd, '\', '%', 'g')
   else
     return substitute(a:cwd, '/', '%', 'g')
   endif
