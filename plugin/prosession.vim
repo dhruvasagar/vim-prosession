@@ -29,7 +29,11 @@ if !isdirectory(fnamemodify(g:prosession_dir, ':p'))
 endif
 
 function! s:undofile(cwd) "{{{1
-  return substitute(a:cwd, '/', '%', 'g')
+  if has('win16') || has('win32') || has('win64')
+    return substitute(a:cmd, '\', '%', 'g')
+  else
+    return substitute(a:cwd, '/', '%', 'g')
+  endif
 endfunction
 
 function! s:StripTrailingSlash(name) "{{{1
