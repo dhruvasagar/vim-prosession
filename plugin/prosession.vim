@@ -80,7 +80,7 @@ endfunction
 
 function! s:GetSessionFile(...) "{{{1
   let sname = ''
-  if s:IsLastSessionDir()
+  if !a:0 && s:IsLastSessionDir()
     let sname = 'last_session.vim'
   endif
   if empty(sname)
@@ -104,6 +104,7 @@ function! s:SetTmuxWindowName(name) "{{{1
     augroup END
   endif
 endfunction 
+
 function! s:Prosession(name) "{{{1
   if s:read_from_stdin
     return
