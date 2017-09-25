@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.6
+* Add `g:prosession_last_session_dir` to load last session from that path when
+  launching vim
+
 ## 0.5.5
 * Added check for `g:prosession_dir` to create it if not already present.
 * Fix default session loading flow, instead of doing a recursive call
