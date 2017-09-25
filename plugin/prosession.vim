@@ -23,6 +23,7 @@ call s:SetGlobalOptDefault('prosession_default_session', 0)
 call s:SetGlobalOptDefault('prosession_per_branch', 0)
 call s:SetGlobalOptDefault('prosession_branch_cmd', 'git rev-parse --abbrev-ref HEAD 2>/dev/null')
 call s:SetGlobalOptDefault('prosession_tmux_title_format', 'vim - @@@')
+call s:SetGlobalOptDefault('prosession_last_session_dir', '')
 
 if !isdirectory(fnamemodify(g:prosession_dir, ':p'))
   call mkdir(fnamemodify(g:prosession_dir, ':p'), 'p')
@@ -42,6 +43,10 @@ endfunction
 
 function! s:GetCWD()
   return exists('*ProjectRootGuess') ? ProjectRootGuess() : getcwd()
+endfunction
+
+function! s:IsLastSessionDir()
+  return s:GetCWD() ==# g:prosession_last_session_dir
 endfunction
 
 function! s:throw(string) abort
@@ -74,7 +79,15 @@ function! s:GetSessionFileName(...) "{{{1
 endfunction
 
 function! s:GetSessionFile(...) "{{{1
-  return fnamemodify(g:prosession_dir, ':p') . call('s:GetSessionFileName', a:000) . '.vim'
+  let sname = ''
+  if s:IsLastSessionDir()
+    let sname = 'last_session.vim'
+  endif
+  if empty(sname)
+    let sname = call('s:GetSessionFileName', a:000) . '.vim'
+  endif
+  " return fnamemodify(g:prosession_dir, ':p') . call('s:GetSessionFileName', a:000) . '.vim'
+  return fnamemodify(g:prosession_dir, ':p') . sname
 endfunction
 
 function! s:SetTmuxWindowName(name) "{{{1
@@ -90,8 +103,7 @@ function! s:SetTmuxWindowName(name) "{{{1
       autocmd VimLeavePre * call system('tmux set-window-option -t ' . $TMUX_PANE . ' automatic-rename on')
     augroup END
   endif
-endfunction
-
+endfunction 
 function! s:Prosession(name) "{{{1
   if s:read_from_stdin
     return
@@ -119,6 +131,9 @@ function! s:Prosession(name) "{{{1
     endif
   endif
   call s:SetTmuxWindowName(a:name)
+  if !s:IsLastSessionDir()
+    let g:prosession_last_session_file = sname
+  endif
   silent execute 'Obsession' fnameescape(sname)
 endfunction
 
@@ -129,6 +144,7 @@ if !argc() && g:prosession_on_startup
 
     autocmd StdInReadPost * nested let s:read_from_stdin=1
     autocmd VimEnter * nested call s:Prosession(s:GetSessionFile())
+    autocmd VimLeave * exec 'mksession!' g:prosession_dir . 'last_session.vim'
   augroup END
 endif
 
