@@ -46,7 +46,7 @@ function! s:GetCWD()
 endfunction
 
 function! s:IsLastSessionDir()
-  return s:GetCWD() ==# g:prosession_last_session_dir
+  return s:GetCWD() ==# expand(g:prosession_last_session_dir)
 endfunction
 
 function! s:throw(string) abort
