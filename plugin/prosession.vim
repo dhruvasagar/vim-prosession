@@ -23,26 +23,49 @@ call s:SetGlobalOptDefault('prosession_default_session', 0)
 call s:SetGlobalOptDefault('prosession_per_branch', 0)
 call s:SetGlobalOptDefault('prosession_branch_cmd', 'git rev-parse --abbrev-ref HEAD 2>/dev/null')
 call s:SetGlobalOptDefault('prosession_tmux_title_format', 'vim - @@@')
+call s:SetGlobalOptDefault('prosession_last_session_dir', '')
 
 if !isdirectory(fnamemodify(g:prosession_dir, ':p'))
   call mkdir(fnamemodify(g:prosession_dir, ':p'), 'p')
 endif
 
 function! s:undofile(cwd) "{{{1
-  return substitute(a:cwd, '/', '%', 'g')
+  if !&shellslash || has('win16') || has('win32') || has('win64')
+    return substitute(a:cwd, '\', '%', 'g')
+  else
+    return substitute(a:cwd, '/', '%', 'g')
+  endif
 endfunction
 
 function! s:StripTrailingSlash(name) "{{{1
-  return a:name =~# '/$' ? a:name[:-2] : a:name
+  return a:name =~# '[\/]$' ? a:name[:-2] : a:name
 endfunction
 
 function! s:GetCWD()
   return exists('*ProjectRootGuess') ? ProjectRootGuess() : getcwd()
 endfunction
 
+function! s:IsLastSessionDir()
+  return s:GetCWD() ==# expand(g:prosession_last_session_dir)
+endfunction
+
+function! s:throw(string) abort
+  let v:errmsg = a:string
+  throw 'prosession: '.v:errmsg
+endfunction
+
+function! s:error(str) abort
+  echohl ErrorMsg
+  echomsg a:str
+  echohl None
+endfunction
+
 function! s:GetDirName(...) "{{{1
-  let dir = a:0 ? a:1 : s:GetCWD()
+  let dir = a:0 && a:1 !=# '.' ? a:1 : s:GetCWD()
   let dir = s:StripTrailingSlash(dir)
+  if !isdirectory(dir)
+    call s:throw('Directory ' . dir . ' does not exist')
+  endif
   if g:prosession_per_branch
     let dir .= '_' . prosession#GetCurrBranch(dir)
   endif
@@ -56,7 +79,15 @@ function! s:GetSessionFileName(...) "{{{1
 endfunction
 
 function! s:GetSessionFile(...) "{{{1
-  return fnamemodify(g:prosession_dir, ':p') . call('s:GetSessionFileName', a:000) . '.vim'
+  let sname = ''
+  if !a:0 && s:IsLastSessionDir()
+    let sname = 'last_session.vim'
+  endif
+  if empty(sname)
+    let sname = call('s:GetSessionFileName', a:000) . '.vim'
+  endif
+  " return fnamemodify(g:prosession_dir, ':p') . call('s:GetSessionFileName', a:000) . '.vim'
+  return fnamemodify(g:prosession_dir, ':p') . sname
 endfunction
 
 function! s:SetTmuxWindowName(name) "{{{1
@@ -72,17 +103,23 @@ function! s:SetTmuxWindowName(name) "{{{1
       autocmd VimLeavePre * call system('tmux set-window-option -t ' . $TMUX_PANE . ' automatic-rename on')
     augroup END
   endif
-endfunction
+endfunction 
 
 function! s:Prosession(name) "{{{1
   if s:read_from_stdin
     return
   endif
+  try
+    let sname = s:GetSessionFile(expand(a:name))
+  catch /^prosession/
+    call s:error(v:errmsg)
+    return
+  endtry
+  doautocmd User ProsessionPre
   if !empty(get(g:, 'this_obsession', ''))
     silent Obsession " Stop current session
   endif
   silent! noautocmd bufdo bw
-  let sname = s:GetSessionFile(expand(a:name))
   if filereadable(sname)
     silent execute 'source' fnameescape(sname)
   elseif isdirectory(expand(a:name))
@@ -96,7 +133,11 @@ function! s:Prosession(name) "{{{1
     endif
   endif
   call s:SetTmuxWindowName(a:name)
+  if !s:IsLastSessionDir()
+    let g:prosession_last_session_file = sname
+  endif
   silent execute 'Obsession' fnameescape(sname)
+  doautocmd User ProsessionPost
 endfunction
 
 " Start / Load session {{{1
@@ -106,6 +147,7 @@ if !argc() && g:prosession_on_startup
 
     autocmd StdInReadPost * nested let s:read_from_stdin=1
     autocmd VimEnter * nested call s:Prosession(s:GetSessionFile())
+    autocmd VimLeave * exec 'mksession!' g:prosession_dir . 'last_session.vim'
   augroup END
 endif
 

@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------
                                  VIM ProSession
 
-                   Handle sessions like a PRO. Version 0.5.5
+                   Handle sessions like a PRO. Version 0.5.6
 
               Repo: https://github.com/dhruvasagar/vim-prosession
                  Author: Dhruva Sagar <http://dhruvasagar.com/>
@@ -64,6 +64,11 @@ g:prosession_branch_cmd
                       but can be changed for other vcs as well. >
                         let g:prosession_branch_cmd = 'git rev-parse --abbrev-ref HEAD 2>/dev/null
 <
+                                               *g:prosession_last_session_dir*
+g:prosession_last_session_dir
+                      This defines the directory where when vim launches
+                      instead of creating / starting the session for that
+                      directory we start the last used session.
 
 ------------------------------------------------------------------------------
 USAGE                                                              *:Prosession*
