@@ -30,7 +30,7 @@ if !isdirectory(fnamemodify(g:prosession_dir, ':p'))
 endif
 
 function! s:undofile(cwd) "{{{1
-  if (exists('+shellslash') && !&shellslash) || has('win16') || has('win32') || has('win64')
+  if &shellslash || has('win16') || has('win32') || has('win64')
     return substitute(a:cwd, '\', '%', 'g')
   else
     return substitute(a:cwd, '/', '%', 'g')
