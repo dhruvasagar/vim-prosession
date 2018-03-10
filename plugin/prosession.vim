@@ -115,7 +115,7 @@ function! s:Prosession(name) "{{{1
     call s:error(v:errmsg)
     return
   endtry
-  doautocmd User ProsessionPre
+  silent autocmd User ProsessionPre
   if !empty(get(g:, 'this_obsession', ''))
     silent Obsession " Stop current session
   endif
@@ -137,7 +137,7 @@ function! s:Prosession(name) "{{{1
     let g:prosession_last_session_file = sname
   endif
   silent execute 'Obsession' fnameescape(sname)
-  doautocmd User ProsessionPost
+  silent autocmd User ProsessionPost
 endfunction
 
 " Start / Load session {{{1
