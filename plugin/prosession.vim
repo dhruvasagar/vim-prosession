@@ -115,7 +115,9 @@ function! s:Prosession(name) "{{{1
     call s:error(v:errmsg)
     return
   endtry
-  silent autocmd User ProsessionPre
+  if exists('#User#ProsessionPre')
+    execute 'doautocmd '.(v:version >= 704 || (v:version == 703 && has('patch442')) ? '<nomodeline> ' : '').'User ProsessionPre'
+  endif
   if !empty(get(g:, 'this_obsession', ''))
     silent Obsession " Stop current session
   endif
@@ -137,7 +139,9 @@ function! s:Prosession(name) "{{{1
     let g:prosession_last_session_file = sname
   endif
   silent execute 'Obsession' fnameescape(sname)
-  silent autocmd User ProsessionPost
+  if exists('#User#ProsessionPost')
+    execute 'doautocmd '.(v:version >= 704 || (v:version == 703 && has('patch442')) ? '<nomodeline> ' : '').'User ProsessionPost'
+  endif
 endfunction
 
 " Start / Load session {{{1
