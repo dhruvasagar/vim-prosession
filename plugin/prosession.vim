@@ -7,7 +7,7 @@ let g:loaded_prosession = 1
 let s:read_from_stdin = 0
 
 if !exists(':Obsession')
-  echo "vim-prosession depends on tpope/vim-obsession, kindly install that first."
+  echom 'vim-prosession depends on tpope/vim-obsession, please install/load that first.'
   finish
 endif
 
