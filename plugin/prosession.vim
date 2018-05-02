@@ -121,7 +121,8 @@ function! s:Prosession(name) "{{{1
   if !empty(get(g:, 'this_obsession', ''))
     silent Obsession " Stop current session
   endif
-  silent! noautocmd bufdo bw
+  " Remove all current buffers.
+  exe 'noautocmd bwipe '.join(filter(range(1, bufnr('$')), 'bufexists(v:val)'))
   if filereadable(sname)
     silent execute 'source' fnameescape(sname)
   elseif isdirectory(expand(a:name))
