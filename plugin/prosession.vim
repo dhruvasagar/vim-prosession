@@ -122,7 +122,7 @@ function! s:Prosession(name) "{{{1
     silent Obsession " Stop current session
   endif
   " Remove all current buffers.
-  exe 'noautocmd bwipe '.join(filter(range(1, bufnr('$')), 'bufexists(v:val)'))
+  %bwipe
   if filereadable(sname)
     silent execute 'source' fnameescape(sname)
   elseif isdirectory(expand(a:name))
