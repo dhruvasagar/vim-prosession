@@ -78,6 +78,15 @@ USAGE                                                              *:Prosession*
                       paths.
 
 ------------------------------------------------------------------------------
+FUNCTIONS                                                 *prosession-functions*
+
+
+                                                     *prosession#ListSessions()*
+prosession#ListSessions([{filter}])
+                      Gets a list of the available sessions optionally
+                      filtered by {filter}.
+
+------------------------------------------------------------------------------
 CONTRIBUTING                                           *prosession-contributing*
 
 Contributions are welcome. Fork the repo and send a pull request or open an
