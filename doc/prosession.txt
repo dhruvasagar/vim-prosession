@@ -77,6 +77,11 @@ USAGE                                                              *:Prosession*
                       exists otherwise start a new session, autocompletes
                       paths.
 
+                                                             *:ProsessionDelete*
+:ProsessionDelete [{dir}]
+                      Deletes the session attached to the specified {dir}.
+                      If no {dir} is specified, deletes the currently
+                      active session.
 ------------------------------------------------------------------------------
 FUNCTIONS                                                 *prosession-functions*
 

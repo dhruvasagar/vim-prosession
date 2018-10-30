@@ -6,6 +6,8 @@ let g:loaded_prosession = 1
 
 let s:read_from_stdin = 0
 
+let s:save_last_on_leave = g:prosession_on_startup
+
 if !exists(':Obsession')
   echom 'vim-prosession depends on tpope/vim-obsession, please install/load that first.'
   finish
@@ -103,7 +105,38 @@ function! s:SetTmuxWindowName(name) "{{{1
       autocmd VimLeavePre * call system('tmux set-window-option -t ' . $TMUX_PANE . ' automatic-rename on')
     augroup END
   endif
-endfunction 
+endfunction
+
+function! s:ProsessionDelete(...) "{{{1
+  let name = a:0 >= 1 ? a:1 : ''
+
+  if empty(name)
+    let sname = g:prosession_last_session_file
+  else
+    try
+      let sname = s:GetSessionFile(expand(name))
+    catch /^prosession/
+      call s:error(v:errmsg)
+      return
+    endtry
+  endif
+
+  if exists('#User#ProsessionDeletePre')
+    execute 'doautocmd '.(v:version >= 704 || (v:version == 703 && has('patch442')) ? '<nomodeline> ' : '').'User ProsessionDeletePre'
+  endif
+  if g:prosession_last_session_file == sname && g:this_obsession == sname
+    call s:error('Deleting active session')
+    " Prevent saving the last session
+    let s:save_last_on_leave = 0
+    execute 'Obsession!'
+  endif
+
+  call system('rm '.sname)
+
+  if exists('#User#ProsessionDeletePost')
+    execute 'doautocmd '.(v:version >= 704 || (v:version == 703 && has('patch442')) ? '<nomodeline> ' : '').'User ProsessionDeletePost'
+  endif
+endfunction
 
 function! s:Prosession(name) "{{{1
   if s:read_from_stdin
@@ -140,8 +173,16 @@ function! s:Prosession(name) "{{{1
     let g:prosession_last_session_file = sname
   endif
   silent execute 'Obsession' fnameescape(sname)
+  " Restore last session saving
+  let s:save_last_on_leave = g:prosession_on_startup
   if exists('#User#ProsessionPost')
     execute 'doautocmd '.(v:version >= 704 || (v:version == 703 && has('patch442')) ? '<nomodeline> ' : '').'User ProsessionPost'
+  endif
+endfunction
+
+function! s:save_last_session()
+  if s:save_last_on_leave
+    exec 'mksession!' g:prosession_dir . 'last_session.vim'
   endif
 endfunction
 
@@ -152,9 +193,12 @@ if !argc() && g:prosession_on_startup
 
     autocmd StdInReadPost * nested let s:read_from_stdin=1
     autocmd VimEnter * nested call s:Prosession(s:GetSessionFile())
-    autocmd VimLeave * exec 'mksession!' g:prosession_dir . 'last_session.vim'
+    autocmd VimLeave * call s:save_last_session()
   augroup END
 endif
 
 " Command Prosession {{{1
 command! -bar -nargs=1 -complete=customlist,prosession#ProsessionComplete Prosession call s:Prosession(<q-args>)
+"
+" Command Prosession Delete{{{1
+command! -bar -nargs=? -complete=customlist,prosession#ProsessionComplete ProsessionDelete call s:ProsessionDelete(<q-args>)
