@@ -6,8 +6,6 @@ let g:loaded_prosession = 1
 
 let s:read_from_stdin = 0
 
-let s:save_last_on_leave = g:prosession_on_startup
-
 if !exists(':Obsession')
   echom 'vim-prosession depends on tpope/vim-obsession, please install/load that first.'
   finish
@@ -26,6 +24,8 @@ call s:SetGlobalOptDefault('prosession_per_branch', 0)
 call s:SetGlobalOptDefault('prosession_branch_cmd', 'git rev-parse --abbrev-ref HEAD 2>/dev/null')
 call s:SetGlobalOptDefault('prosession_tmux_title_format', 'vim - @@@')
 call s:SetGlobalOptDefault('prosession_last_session_dir', '')
+
+let s:save_last_on_leave = g:prosession_on_startup
 
 if !isdirectory(fnamemodify(g:prosession_dir, ':p'))
   call mkdir(fnamemodify(g:prosession_dir, ':p'), 'p')
