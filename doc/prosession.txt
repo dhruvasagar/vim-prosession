@@ -92,6 +92,30 @@ prosession#ListSessions([{filter}])
                       filtered by {filter}.
 
 ------------------------------------------------------------------------------
+DENITE SUPPORT                                               *prosession-denite*
+
+
+Prosession includes support for Denite https://github.com/Shougo/denite.nvim 
+if it's installed in your system, you should see a new prosession source which
+lists your available sessions. After selecting a session you can either switch
+to it (default) or delete it in order to tidy up your environment.
+
+You can control the formatting of the denite list using the format variable.
+Available options are:
+
+default
+                  Displays the full path of your session, highlighting the
+                  last directory.
+split
+                  Displays the last directory to the left and the base path to
+                  the right of the denite window.
+minimal
+                  Displays only the directory name of your session.
+
+Usage example:
+	call denite#custom#var('prosession', 'format', 'split')
+
+------------------------------------------------------------------------------
 CONTRIBUTING                                           *prosession-contributing*
 
 Contributions are welcome. Fork the repo and send a pull request or open an
