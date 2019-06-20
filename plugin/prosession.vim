@@ -155,7 +155,7 @@ function! s:Prosession(name) "{{{1
     silent Obsession " Stop current session
   endif
   " Remove all current buffers.
-  %bwipe
+  %bwipe!
   if filereadable(sname)
     silent execute 'source' fnameescape(sname)
   elseif isdirectory(expand(a:name))
