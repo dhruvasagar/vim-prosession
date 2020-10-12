@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------
                                  VIM ProSession
 
-                   Handle sessions like a PRO. Version 0.6.0
+                   Handle sessions like a PRO. Version 0.6.1
 
               Repo: https://github.com/dhruvasagar/vim-prosession
                  Author: Dhruva Sagar <http://dhruvasagar.com/>
@@ -74,7 +74,12 @@ g:prosession_last_session_dir
 g:prosession_ignore_dirs
                       This is a comma (`,`) separated list of dirs we want
                       prosession to ignore and not create / load a session for
-                      them.
+                      them. By default it's set to be empty. >
+                        let g:prosession_ignore_dirs = [
+                              \ '/path1',
+                              \ '/path2',
+                              \]
+<
 ------------------------------------------------------------------------------
 USAGE                                                              *:Prosession*
 
