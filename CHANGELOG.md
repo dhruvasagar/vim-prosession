@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.6.0
+* Add `g:prosession_ignore_dirs` to configure a list of comma separated
+  directories to be ignored by prosession
+
 ## 0.5.6
 * Add `g:prosession_last_session_dir` to load last session from that path when
   launching vim

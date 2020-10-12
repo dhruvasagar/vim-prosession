@@ -24,6 +24,7 @@ call s:SetGlobalOptDefault('prosession_per_branch', 0)
 call s:SetGlobalOptDefault('prosession_branch_cmd', 'git rev-parse --abbrev-ref HEAD 2>/dev/null')
 call s:SetGlobalOptDefault('prosession_tmux_title_format', 'vim - @@@')
 call s:SetGlobalOptDefault('prosession_last_session_dir', '')
+call s:SetGlobalOptDefault('prosession_ignore_dirs', '')
 
 let s:save_last_on_leave = g:prosession_on_startup
 
@@ -138,8 +139,20 @@ function! s:ProsessionDelete(...) "{{{1
   endif
 endfunction
 
+function! s:ProsessionIgnoreCWD() "{{{1
+  if empty(g:prosession_ignore_dirs) | return v:false | end
+  let cdir = s:GetCWD()
+  for idir in split(g:prosession_ignore_dirs, ',')
+    let idir = expand(idir)
+    if isdirectory(idir) && cdir == idir
+      return v:true
+    endif
+  endfor
+  return v:false
+endfunction
+
 function! s:Prosession(name) "{{{1
-  if s:read_from_stdin
+  if s:read_from_stdin || s:ProsessionIgnoreCWD() == v:true
     return
   endif
   try
