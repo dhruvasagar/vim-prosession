@@ -16,12 +16,18 @@ function! s:SetGlobalOptDefault(opt, val)
   if !exists('g:' . a:opt) | let g:{a:opt} = a:val | endif
 endfunction
 
+let s:default_branch_cmd = 'git rev-parse --abbrev-ref HEAD 2>/dev/null'
+
+if has('win64') || has('win32')
+  let s:default_branch_cmd = 'git rev-parse --abbrev-ref HEAD 2>&1'
+endif
+
 call s:SetGlobalOptDefault('prosession_dir', expand('~/.vim/session/'))
 call s:SetGlobalOptDefault('prosession_tmux_title', 0)
 call s:SetGlobalOptDefault('prosession_on_startup', 1)
 call s:SetGlobalOptDefault('prosession_default_session', 0)
 call s:SetGlobalOptDefault('prosession_per_branch', 0)
-call s:SetGlobalOptDefault('prosession_branch_cmd', 'git rev-parse --abbrev-ref HEAD 2>/dev/null')
+call s:SetGlobalOptDefault('prosession_branch_cmd', s:default_branch_cmd)
 call s:SetGlobalOptDefault('prosession_tmux_title_format', 'vim - @@@')
 call s:SetGlobalOptDefault('prosession_last_session_dir', '')
 call s:SetGlobalOptDefault('prosession_ignore_dirs', [])
