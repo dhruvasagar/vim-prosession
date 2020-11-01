@@ -1,5 +1,6 @@
 function! prosession#ExecInDir(dir, cmd) "{{{1
-  return system('cd ' . fnameescape(a:dir) . '; ' . a:cmd)
+  let pipe = has('win64') || has('win32') ? ' & ' : '; '
+  return system('cd ' . fnameescape(a:dir) . pipe . a:cmd)
 endfunction
 
 function! prosession#GetCurrBranch(dir) "{{{1
