@@ -19,7 +19,7 @@ endfunction
 let s:default_branch_cmd = 'git rev-parse --abbrev-ref HEAD 2>/dev/null'
 
 if has('win64') || has('win32')
-  let s:default_branch_cmd = 'git rev-parse --abbrev-ref HEAD 2>&1'
+  let s:default_branch_cmd = 'git rev-parse --abbrev-ref HEAD 2>nul'
 endif
 
 call s:SetGlobalOptDefault('prosession_dir', expand('~/.vim/session/'))
