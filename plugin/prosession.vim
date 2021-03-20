@@ -31,6 +31,7 @@ call s:SetGlobalOptDefault('prosession_branch_cmd', s:default_branch_cmd)
 call s:SetGlobalOptDefault('prosession_tmux_title_format', 'vim - @@@')
 call s:SetGlobalOptDefault('prosession_last_session_dir', '')
 call s:SetGlobalOptDefault('prosession_ignore_dirs', [])
+call s:SetGlobalOptDefault('Prosession_ignore_expr', {->v:false})
 
 let s:save_last_on_leave = g:prosession_on_startup
 
@@ -158,7 +159,9 @@ function! s:ProsessionIgnoreCWD() "{{{1
 endfunction
 
 function! s:Prosession(name) "{{{1
-  if s:read_from_stdin || s:ProsessionIgnoreCWD() == v:true
+  if s:read_from_stdin
+        \ || s:ProsessionIgnoreCWD() == v:true
+        \ || g:Prosession_ignore_expr() == v:true
     return
   endif
   try
