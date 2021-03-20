@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------
                                  VIM ProSession
 
-                   Handle sessions like a PRO. Version 0.6.1
+                   Handle sessions like a PRO. Version 0.6.2
 
               Repo: https://github.com/dhruvasagar/vim-prosession
                  Author: Dhruva Sagar <http://dhruvasagar.com/>
@@ -79,6 +79,17 @@ g:prosession_ignore_dirs
                               \ '/path1',
                               \ '/path2',
                               \]
+<
+                                                    *g:Prosession_ignore_expr*
+g:Prosession_ignore_expr
+                      This is a |Funcref| that must return a boolean value,
+                      either |v:true| or |v:false|, upon invocation. >
+                        let g:Prosession_ignore_expr = {->v:false}
+<
+                      This could be used to ignore directories by using some
+                      specific criteria. Following is an example to ignore all
+                      directories that are not git repos. >
+                        let g:Prosession_ignore_expr = {-> !isdirectory('.git')}
 <
 ------------------------------------------------------------------------------
 USAGE                                                              *:Prosession*
