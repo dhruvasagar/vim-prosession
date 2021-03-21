@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.6.2
+* Add `g:Prosession_ignore_expr` to allow more control over directories to be
+  ignored by prosession
+
+## 0.6.1
+* Switch `g:prosession_ignore_dirs` to be an array of paths instead of
+  a string delimited by a comma
+
 ## 0.6.0
 * Add `g:prosession_ignore_dirs` to configure a list of comma separated
   directories to be ignored by prosession
