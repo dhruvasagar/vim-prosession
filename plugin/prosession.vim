@@ -196,7 +196,6 @@ function! s:Prosession(name) "{{{1
 endfunction
 
 function! s:GetLastSessionFile()
-  echo s:LastSession()
   try
     return g:prosession_dir . trim(readfile(s:LastSession())[0])
   catch
