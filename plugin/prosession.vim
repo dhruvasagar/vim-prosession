@@ -89,14 +89,7 @@ function! s:GetSessionFileName(...) "{{{1
 endfunction
 
 function! s:GetSessionFile(...) "{{{1
-  let sname = ''
-  if !a:0 && s:IsLastSessionDir()
-    let sname = 'last_session.vim'
-  endif
-  if empty(sname)
-    let sname = call('s:GetSessionFileName', a:000) . '.vim'
-  endif
-  " return fnamemodify(g:prosession_dir, ':p') . call('s:GetSessionFileName', a:000) . '.vim'
+  let sname = call('s:GetSessionFileName', a:000) . '.vim'
   return fnamemodify(g:prosession_dir, ':p') . sname
 endfunction
 
@@ -202,9 +195,21 @@ function! s:Prosession(name) "{{{1
   endif
 endfunction
 
+function! s:GetLastSessionFile()
+  try
+    return g:prosession_dir . trim(readfile(s:LastSession())[0])
+  catch
+    return ""
+  endtry
+endfunction
+
+function! s:LastSession()
+  return expand(g:prosession_dir . "last_session.txt")
+endfunction
+
 function! s:save_last_session()
-  if s:save_last_on_leave
-    exec 'mksession!' g:prosession_dir . 'last_session.vim'
+  if s:save_last_on_leave && exists("g:this_obsession")
+    call writefile([fnamemodify(g:this_obsession, ":t")], s:LastSession())
   endif
 endfunction
 
@@ -214,10 +219,21 @@ if !argc() && len(v:argv) < 2 && g:prosession_on_startup
     au!
 
     autocmd StdInReadPost * nested let s:read_from_stdin=1
-    autocmd VimEnter * nested call s:Prosession(s:GetSessionFile())
+    autocmd VimEnter * nested call s:AutoStart()
     autocmd VimLeave * call s:save_last_session()
   augroup END
 endif
+
+function! s:AutoStart()
+  let sname = ""
+  if s:IsLastSessionDir()
+    let sname = s:GetLastSessionFile()
+  endif
+  if empty(sname)
+    let sname = s:GetSessionFile()
+  endif
+  call s:Prosession(sname)
+endfunction
 
 " Command Prosession {{{1
 command! -bar -nargs=1 -complete=customlist,prosession#ProsessionComplete Prosession call s:Prosession(<q-args>)
