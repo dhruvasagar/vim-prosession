@@ -214,7 +214,7 @@ function! s:save_last_session()
 endfunction
 
 " Start / Load session {{{1
-if !argc() && len(v:argv) < 2 && g:prosession_on_startup
+if !argc() && index(argv(), '-q') == -1 && g:prosession_on_startup
   augroup Prosession
     au!
 
