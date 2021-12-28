@@ -29,13 +29,13 @@ Vim ProSession depends on
 NeoBundle 'dhruvasagar/vim-prosession', {'depends': 'tpope/vim-obsession'}
 ```
 
-2. With [Vundle](https://github.com/gmarik/Vundle.vim')
+2. With [Vundle](https://github.com/gmarik/Vundle.vim)
 ```vim
 Plugin 'tpope/vim-obsession'
 Plugin 'dhruvasagar/vim-prosession'
 ```
 
-3. With [Pathogen](https://github.com/tpope/vim-pathogen')
+3. With [Pathogen](https://github.com/tpope/vim-pathogen)
 ```
 cd ~/.vim/bundle
 git clone git://github.com/tpope/vim-obsession.git
