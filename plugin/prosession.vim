@@ -214,7 +214,13 @@ function! s:save_last_session()
 endfunction
 
 " Start / Load session {{{1
-if !argc() && index(argv(), '-q') == -1 && g:prosession_on_startup
+if has("nvim-0.6.1") || has("patch-8.1-2233")
+  let s:should_load_session = index(v:argv, '-q') == 1 ? 0 : 1
+else
+  let s:should_load_session = index(argv(), '-q') == 1 ? 0 : 1
+endif
+
+if !argc() && s:should_load_session && g:prosession_on_startup
   augroup Prosession
     au!
 
