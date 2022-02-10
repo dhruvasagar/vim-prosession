@@ -23,6 +23,14 @@ function! prosession#ListSessions(...) "{{{1
   return flist
 endfunction
 
+function! prosession#Clean() "{{{1
+  let files = glob(fnamemodify(g:prosession_dir, ':p') . '*.vim', 0, 1)
+  for file in files
+    let dir = substitute(fnamemodify(file, ':t:r'), '%', '/', 'g')
+    if !isdirectory(dir) | call delete(file) | endif
+  endfor
+endfunction
+
 function! prosession#ProsessionComplete(ArgLead, Cmdline, Cursor) "{{{1
   return prosession#ListSessions(a:ArgLead)
 endfunction

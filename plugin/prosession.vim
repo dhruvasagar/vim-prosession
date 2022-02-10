@@ -240,3 +240,5 @@ command! -bar -nargs=1 -complete=customlist,prosession#ProsessionComplete Proses
 "
 " Command Prosession Delete{{{1
 command! -bar -nargs=? -complete=customlist,prosession#ProsessionComplete ProsessionDelete call s:ProsessionDelete(<q-args>)
+
+command! ProsessionClean call prosession#Clean()

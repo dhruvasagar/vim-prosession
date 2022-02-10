@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------
                                  VIM ProSession
 
-                   Handle sessions like a PRO. Version 0.6.2
+                   Handle sessions like a PRO. Version 0.6.3
 
               Repo: https://github.com/dhruvasagar/vim-prosession
                  Author: Dhruva Sagar <http://dhruvasagar.com/>
@@ -103,6 +103,12 @@ USAGE                                                              *:Prosession*
                       Deletes the session attached to the specified {dir}.
                       If no {dir} is specified, deletes the currently
                       active session.
+
+                                                            *:ProsessionClean*
+:ProsessionClean
+                      Cleans up the session files deleting any files the
+                      directories of which no longer exist
+
 ------------------------------------------------------------------------------
 FUNCTIONS                                                 *prosession-functions*
 
