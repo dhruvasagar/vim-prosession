@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.6.3
+Switch to `delete()` instead of `system('rm '.sname)`
+
 ## 0.6.2
 * Add `g:Prosession_ignore_expr` to allow more control over directories to be
   ignored by prosession
