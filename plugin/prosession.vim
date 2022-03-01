@@ -132,7 +132,7 @@ function! s:ProsessionDelete(...) "{{{1
     execute 'Obsession!'
   endif
 
-  call system('rm '.sname)
+  call delete(sname)
 
   if exists('#User#ProsessionDeletePost')
     execute 'doautocmd '.(v:version >= 704 || (v:version == 703 && has('patch442')) ? '<nomodeline> ' : '').'User ProsessionDeletePost'
