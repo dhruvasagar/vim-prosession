@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------
                                  VIM ProSession
 
-                   Handle sessions like a PRO. Version 0.6.3
+                   Handle sessions like a PRO. Version 0.7.0
 
               Repo: https://github.com/dhruvasagar/vim-prosession
                  Author: Dhruva Sagar <http://dhruvasagar.com/>
@@ -94,9 +94,10 @@ g:Prosession_ignore_expr
 ------------------------------------------------------------------------------
 USAGE                                                              *:Prosession*
 
-:Prosession {dir}     Switch to the session of the directory if one already
+:Prosession [{dir}]   Switch to the session of the directory if one already
                       exists otherwise start a new session, autocompletes
-                      paths.
+                      paths. If no {dir} is specified, uses the current
+                      directory.
 
                                                              *:ProsessionDelete*
 :ProsessionDelete [{dir}]

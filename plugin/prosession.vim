@@ -151,14 +151,15 @@ function! s:ProsessionIgnoreCWD() "{{{1
   return v:false
 endfunction
 
-function! s:Prosession(name) "{{{1
+function! s:Prosession(...) "{{{1
   if s:read_from_stdin
         \ || s:ProsessionIgnoreCWD() == v:true
         \ || g:Prosession_ignore_expr() == v:true
     return
   endif
+  let aname = a:0 && !empty(a:1) ? a:1 : s:GetCWD()
   try
-    let sname = s:GetSessionFile(expand(a:name))
+    let sname = s:GetSessionFile(expand(aname))
   catch /^prosession/
     call s:error(v:errmsg)
     return
@@ -168,13 +169,13 @@ function! s:Prosession(name) "{{{1
   endif
   if !empty(get(g:, 'this_obsession', ''))
     silent Obsession " Stop current session
+    " Remove all current buffers.
+    silent! %bwipe!
   endif
-  " Remove all current buffers.
-  silent! %bwipe!
   if filereadable(sname)
     silent execute 'source' fnameescape(sname)
-  elseif isdirectory(expand(a:name))
-    execute 'cd' expand(a:name)
+  elseif isdirectory(expand(aname))
+    execute 'cd' expand(aname)
   else
     if g:prosession_default_session
       let sname = s:GetSessionFile('default')
@@ -183,7 +184,7 @@ function! s:Prosession(name) "{{{1
       let sname = s:GetSessionFile()
     endif
   endif
-  call s:SetTmuxWindowName(a:name)
+  call s:SetTmuxWindowName(aname)
   if !s:IsLastSessionDir()
     let g:prosession_last_session_file = sname
   endif
@@ -236,7 +237,7 @@ function! s:AutoStart()
 endfunction
 
 " Command Prosession {{{1
-command! -bar -nargs=1 -complete=customlist,prosession#ProsessionComplete Prosession call s:Prosession(<q-args>)
+command! -bar -nargs=? -complete=customlist,prosession#ProsessionComplete Prosession call s:Prosession(<q-args>)
 "
 " Command Prosession Delete{{{1
 command! -bar -nargs=? -complete=customlist,prosession#ProsessionComplete ProsessionDelete call s:ProsessionDelete(<q-args>)
