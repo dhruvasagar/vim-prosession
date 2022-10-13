@@ -72,7 +72,7 @@ endfunction
 
 function! s:GetDirName(...) "{{{1
   let dir = a:0 && a:1 !=# '.' ? a:1 : s:GetCWD()
-  let dir = s:StripTrailingSlash(dir)
+  let dir = s:StripTrailingSlash(fnamemodify(dir, ':p'))
   if !isdirectory(dir)
     call s:throw('Directory ' . dir . ' does not exist')
   endif
