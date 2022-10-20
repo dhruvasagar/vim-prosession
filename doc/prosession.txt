@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------
                                  VIM ProSession
 
-                   Handle sessions like a PRO. Version 0.7.1
+                   Handle sessions like a PRO. Version 0.7.2
 
               Repo: https://github.com/dhruvasagar/vim-prosession
                  Author: Dhruva Sagar <http://dhruvasagar.com/>
@@ -57,6 +57,12 @@ g:prosession_per_branch
                       per git branch sessions. >
                         let g:prosession_per_branch = 0
 <
+
+                      If this is enabled, and you have `tpope/vim-fugitive`
+                      installed, prosession will also automatically switch to
+                      the git branch's session when you checkout a branch
+                      using the `:Git checkout` command.
+
                                                      *g:prosession_branch_cmd*
 g:prosession_branch_cmd
                       This defines the shell command to use to determine the
