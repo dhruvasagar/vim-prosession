@@ -245,6 +245,25 @@ function! s:AutoStart()
   call s:Prosession(sname)
 endfunction
 
+function! s:AutoSwitch()
+  if g:prosession_per_branch && exists('*FugitiveResult')
+    let fresult = FugitiveResult()
+    if !empty(fresult)
+          \ && has_key(fresult, 'args')
+          \ && !empty(fresult['args'])
+          \ && fresult['args'][0] ==? 'checkout'
+          \ && len(fresult['args']) > 1
+      call s:AutoStart()
+    endif
+  endif
+endfunction
+
+augroup ProsessionGit
+  au!
+
+  autocmd User FugitiveChanged call s:AutoSwitch()
+augroup END
+
 " Command Prosession {{{1
 command! -bar -nargs=? -complete=customlist,prosession#ProsessionComplete Prosession call s:Prosession(<q-args>)
 "
