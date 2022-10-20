@@ -32,6 +32,7 @@ call s:SetGlobalOptDefault('prosession_tmux_title_format', 'vim - @@@')
 call s:SetGlobalOptDefault('prosession_last_session_dir', '')
 call s:SetGlobalOptDefault('prosession_ignore_dirs', [])
 call s:SetGlobalOptDefault('Prosession_ignore_expr', {->v:false})
+call s:SetGlobalOptDefault('prosession_viminfo_per_session', v:false)
 
 let s:save_last_on_leave = g:prosession_on_startup
 
@@ -90,6 +91,11 @@ endfunction
 
 function! s:GetSessionFile(...) "{{{1
   let sname = call('s:GetSessionFileName', a:000) . '.vim'
+  return fnamemodify(g:prosession_dir, ':p') . sname
+endfunction
+
+function! s:GetVimInfoFile(...) "{{{1
+  let sname = call('s:GetSessionFileName', a:000) . '.viminfo'
   return fnamemodify(g:prosession_dir, ':p') . sname
 endfunction
 
@@ -189,6 +195,9 @@ function! s:Prosession(...) "{{{1
     let g:prosession_last_session_file = sname
   endif
   silent execute 'Obsession' fnameescape(sname)
+  if g:prosession_viminfo_per_session
+    exec 'set viminfofile=' . s:GetVimInfoFile()
+  endif
   " Restore last session saving
   let s:save_last_on_leave = g:prosession_on_startup
   if exists('#User#ProsessionPost')

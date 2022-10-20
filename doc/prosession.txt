@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------
                                  VIM ProSession
 
-                   Handle sessions like a PRO. Version 0.7.0
+                   Handle sessions like a PRO. Version 0.7.1
 
               Repo: https://github.com/dhruvasagar/vim-prosession
                  Author: Dhruva Sagar <http://dhruvasagar.com/>
@@ -91,6 +91,14 @@ g:Prosession_ignore_expr
                       directories that are not git repos. >
                         let g:Prosession_ignore_expr = {-> !isdirectory('.git')}
 <
+
+                                            *g:prosession_viminfo_per_session*
+g:prosession_viminfo_per_session
+                      This is disabled by default. You can use this to enable
+                      a per session viminfo file. >
+                        let g:prosession_viminfo_per_session = v:true
+<
+
 ------------------------------------------------------------------------------
 USAGE                                                              *:Prosession*
 
