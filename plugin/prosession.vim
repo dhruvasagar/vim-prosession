@@ -251,7 +251,7 @@ function! s:AutoSwitch()
     if !empty(fresult)
           \ && has_key(fresult, 'args')
           \ && !empty(fresult['args'])
-          \ && fresult['args'][0] ==? 'checkout'
+          \ && (fresult['args'][0] ==? 'checkout' || fresult['args'][0] ==? 'switch')
           \ && len(fresult['args']) > 1
       call s:AutoStart()
     endif
