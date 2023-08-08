@@ -61,7 +61,7 @@ g:prosession_per_branch
                       If this is enabled, and you have `tpope/vim-fugitive`
                       installed, prosession will also automatically switch to
                       the git branch's session when you checkout a branch
-                      using the `:Git checkout` command.
+                      using the `:Git checkout` or `:Git switch` command.
 
                                                      *g:prosession_branch_cmd*
 g:prosession_branch_cmd
