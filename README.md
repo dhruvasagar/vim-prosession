@@ -51,3 +51,14 @@ cd ~/.vim/bundle
 git clone git://github.com/tpope/vim-obsession.git
 git clone git://github.com/dhruvasagar/vim-prosession.git
 ```
+
+4. With [Lazy](https://github.com/folke/lazy.nvim)
+
+```lua
+return {
+  "dhruvasagar/vim-prosession",
+  dependencies = {
+    "tpope/vim-obsession",
+  },
+}
+```
