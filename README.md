@@ -15,6 +15,11 @@ ProSession uses a file name format similar to the `undofile` name format.
 paths from the file system which you can use to start new sessions for them.
 For more details check `:help prosession`.
 
+Prosession also provides a telescope extension, to list and switch to other
+sessions with Telescope, you can use `Telescope prosession` and that launches
+telescope picker with list of all existing sessions that you can find through
+and select to switch to it
+
 ## Change Log
 
 See [CHANGELOG.md](https://github.com/dhruvasagar/vim-prosession/blob/master/CHANGELOG.md)
