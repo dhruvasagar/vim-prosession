@@ -10,6 +10,7 @@ endfunction
 function! s:TestProsessionExecInDir()
   let cmd = "ls -altr ."
   let out = prosession#ExecInDir(s:test_dir, cmd)
+  call testify#logger#info("out: " . out)
   call testify#assert#equals(split(out, "\n")[0], 'total 0')
 endfunction
 call testify#setup(function('s:setup'))
