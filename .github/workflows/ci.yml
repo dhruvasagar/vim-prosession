@@ -27,6 +27,12 @@ jobs:
       - name: Checkout vim-testify
         uses: actions/checkout@v3
         with:
+          repository: tpope/vim-obsession
+          path: pack/plugins/start/vim-obsession
+
+      - name: Checkout vim-testify
+        uses: actions/checkout@v3
+        with:
           repository: dhruvasagar/vim-testify
           path: pack/plugins/start/vim-testify
 
