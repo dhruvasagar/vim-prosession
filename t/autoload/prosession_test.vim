@@ -8,10 +8,9 @@ function! s:teardown() abort
 endfunction
 
 function! s:TestProsessionExecInDir()
-  let cmd = "ls -altr ."
+  let cmd = "echo -n true"
   let out = prosession#ExecInDir(s:test_dir, cmd)
-  call testify#logger#info("out: " . out)
-  call testify#assert#equals(split(out, "\n")[0], 'total 0')
+  call testify#assert#equals(out, "true")
 endfunction
 call testify#setup(function('s:setup'))
 call testify#it('ProsessionExecInDir should work', function('s:TestProsessionExecInDir'))
