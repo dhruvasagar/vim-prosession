@@ -54,11 +54,31 @@ git clone git://github.com/dhruvasagar/vim-prosession.git
 
 4. With [Lazy](https://github.com/folke/lazy.nvim)
 
+Standalone
+
 ```lua
-return {
+{
   "dhruvasagar/vim-prosession",
   dependencies = {
     "tpope/vim-obsession",
   },
+}
+```
+
+Or, directly use with telescope as an extension
+
+```lua
+{
+  "nvim-telescope/telescope.nvim",
+  dependencies = {
+    "tpope/vim-obsession",
+    "dhruvasagar/vim-prosession",
+  },
+  config = function()
+    local telescope = require("telescope")
+
+    telescope.load_extension("prosession")
+    vim.keymap.set("n", "<leader>fp", "<cmd>Telescope prosession<cr>", { desc = "Find projects" })
+  end
 }
 ```
