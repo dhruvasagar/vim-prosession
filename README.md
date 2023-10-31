@@ -78,5 +78,5 @@ require('telescope').load_extension('prosession')
 #### Custom Mapping for Telescope Prosession Picker
 
 ```lua
-vim.keymap.set('n', '<Leader>fp', '<cmd>Telescope prosession<CR>)
+vim.keymap.set('n', '<Leader>fp', '<cmd>Telescope prosession<CR>')
 ```
