@@ -62,3 +62,21 @@ return {
   },
 }
 ```
+
+### Telescope Picker
+
+`vim-prosession` now ships with a telescope picker that allows you to switch
+to existing sessions using telescope. Use the command : `Telescope prosession`
+to launch the picker.
+
+#### Load Telescope Extension
+
+```lua
+require('telescope').load_extension('prosession')
+```
+
+#### Custom Mapping for Telescope Prosession Picker
+
+```lua
+vim.keymap.set('n', '<Leader>fp', '<cmd>Telescope prosession<CR>)
+```
