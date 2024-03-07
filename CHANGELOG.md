@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.7.5
+
+- Fix issue with paths ending in `vim` correctly
+
 ## 0.7.3
 
 - Add telescope picker for integration with telescope

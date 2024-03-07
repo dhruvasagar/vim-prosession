@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------
                                  VIM ProSession
 
-                   Handle sessions like a PRO. Version 0.7.4
+                   Handle sessions like a PRO. Version 0.7.5
 
               Repo: https://github.com/dhruvasagar/vim-prosession
                  Author: Dhruva Sagar <http://dhruvasagar.com/>

@@ -1,4 +1,4 @@
-# VIM ProSession v0.7.4 [![Build](https://github.com/dhruvasagar/vim-prosession/actions/workflows/ci.yml/badge.svg)](https://github.com/dhruvasagar/vim-prosession/actions/workflows/ci.yml)
+# VIM ProSession v0.7.5 [![Build](https://github.com/dhruvasagar/vim-prosession/actions/workflows/ci.yml/badge.svg)](https://github.com/dhruvasagar/vim-prosession/actions/workflows/ci.yml)
 
 A VIM plugin to handle sessions like a pro.
 
