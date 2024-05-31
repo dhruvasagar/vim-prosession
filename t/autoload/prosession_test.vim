@@ -18,6 +18,7 @@ call testify#teardown(function('s:teardown'))
 
 function! s:TestGetCurrBranch()
   let out = prosession#GetCurrBranch(".")
-  call testify#assert#equals(out, $GIT_BRANCH)
+  let branch = subsitute($GIT_BRANCH,"/","%","g")
+  call testify#assert#equals(out, branch)
 endfunction
 call testify#it('prosession#GetCurBranch should get the current git branch', function('s:TestGetCurrBranch'))
