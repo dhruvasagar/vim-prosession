@@ -1,11 +1,12 @@
 function! prosession#ExecInDir(dir, cmd) "{{{1
-  let pipe = has('win64') || has('win32') ? ' & ' : '; '
+  let pipe = has('win64') || has('win32') ? ' ; ' : '; '
   return system('cd ' . fnameescape(a:dir) . pipe . a:cmd)
 endfunction
 
 function! prosession#GetCurrBranch(dir) "{{{1
   let branch = prosession#ExecInDir(a:dir, g:prosession_branch_cmd)
   if branch =~# "\n$" | let branch = branch[:-2] | endif
+  let branch = substitute(branch, '/', '%', 'g')
   return branch
 endfunction
 
