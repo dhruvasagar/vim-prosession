@@ -1,5 +1,10 @@
 function! prosession#ExecInDir(dir, cmd) "{{{1
-  let pipe = has('win64') || has('win32') ? ' ; ' : '; '
+  let iswin = has('win64') || has('win32')
+  let pipe = iswin ? ' | ' : '; '
+  if iswin
+    let ispowershell = &shell == 'powershell.exe' || &shell == 'powershell'
+    let pipe = ispowershell ? ' ; ' : ' | '
+  endif
   return system('cd ' . fnameescape(a:dir) . pipe . a:cmd)
 endfunction
 
