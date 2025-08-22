@@ -131,7 +131,7 @@ function! s:ProsessionDelete(...) "{{{1
   if exists('#User#ProsessionDeletePre')
     execute 'doautocmd '.(v:version >= 704 || (v:version == 703 && has('patch442')) ? '<nomodeline> ' : '').'User ProsessionDeletePre'
   endif
-  if g:prosession_last_session_file == sname && g:this_obsession == sname
+  if exists("g:prosession_last_session_file") && g:prosession_last_session_file == sname && g:this_obsession == sname
     call s:error('Deleting active session')
     " Prevent saving the last session
     let s:save_last_on_leave = 0
