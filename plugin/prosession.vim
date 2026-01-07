@@ -207,14 +207,14 @@ endfunction
 
 function! s:GetLastSessionFile()
   try
-    return g:prosession_dir . trim(readfile(s:LastSession())[0])
+    return fnamemodify(g:prosession_dir, ':p') . trim(readfile(s:LastSession())[0])
   catch
     return ""
   endtry
 endfunction
 
 function! s:LastSession()
-  return expand(g:prosession_dir . "last_session.txt")
+  return fnamemodify(g:prosession_dir, ':p') . "last_session.txt"
 endfunction
 
 function! s:save_last_session()
