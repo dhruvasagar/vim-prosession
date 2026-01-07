@@ -51,7 +51,7 @@ jobs:
       - name: Run unit tests
         env:
           VIM: ${{ steps.vim.outputs.executable }}
-          GIT_BRANCH: ${{ steps.extract_branch.outputs.extract_branch }}
+          GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
         run: |
           cd ${{ github.workspace }}/pack/plugins/start/vim-prosession
           echo "set packpath+=${{ github.workspace }}" > vimrc
